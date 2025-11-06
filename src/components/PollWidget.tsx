@@ -7,7 +7,7 @@ import { PollResults } from './PollResults'
 import { VoteButton } from './VoteButton'
 import { getPollStatus, formatTimestamp, getTimeRemaining, celebrateVote } from '../core/utils'
 import type { WidgetSize } from '../core/config/theme'
-import type { DisplayMode } from '../core/types'
+import type { DisplayMode, ChartType, InfographicStyle, BarOrientation } from '../core/types'
 
 export interface PollWidgetProps {
   pollId: bigint | string
@@ -23,6 +23,10 @@ export interface PollWidgetProps {
   successMessage?: string // Custom success message
   successDuration?: number // Banner duration in ms (default: 3000)
   enableConfetti?: boolean // Override theme confetti setting
+  chartType?: ChartType // Chart visualization type (bar, pie, infographic)
+  barOrientation?: BarOrientation // Bar chart orientation (horizontal, vertical)
+  infographicStyle?: InfographicStyle // Infographic style (icons, leaderboard, cards)
+  chartColors?: string[] // Custom colors for charts
 }
 
 /**
@@ -51,6 +55,10 @@ export function PollWidget({
   successMessage,
   successDuration,
   enableConfetti,
+  chartType,
+  barOrientation,
+  infographicStyle,
+  chartColors,
 }: PollWidgetProps) {
   const { themeConfig } = usePolyPulseConfig()
   const { poll, isLoading, isError, error, refetch } = usePoll({ pollId, chainId })
@@ -207,6 +215,10 @@ export function PollWidget({
               chainId={chainId}
               showVoteCount
               showPercentage
+              chartType={chartType}
+              barOrientation={barOrientation}
+              infographicStyle={infographicStyle}
+              chartColors={chartColors}
             />
           ) : (
             // Show message without revealing results data

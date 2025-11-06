@@ -1,6 +1,6 @@
 {
   "name": "@polypuls3/sdk",
-  "version": "0.4.8",
+  "version": "0.5.0",
   "description": "React SDK for embedding Polypuls3 polls in dapps",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -65,6 +65,7 @@
   "peerDependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "recharts": "^2.0.0",
     "viem": "^2.0.0",
     "wagmi": "^2.0.0"
   },
@@ -73,6 +74,7 @@
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
+    "@types/recharts": "^1.8.29",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "@wagmi/cli": "^2.1.0",
@@ -83,6 +85,7 @@
     "postcss": "^8.4.32",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "recharts": "^3.3.0",
     "tailwindcss": "^3.4.0",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3",

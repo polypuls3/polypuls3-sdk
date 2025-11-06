@@ -9,6 +9,29 @@ import type { Address } from 'viem'
 export type DisplayMode = 'vote' | 'result' | 'mixed'
 
 /**
+ * Chart type for displaying poll results
+ * - 'bar': Horizontal or vertical bar chart (default)
+ * - 'pie': Pie chart with legend
+ * - 'infographic': Custom styled infographic layouts
+ */
+export type ChartType = 'bar' | 'pie' | 'infographic'
+
+/**
+ * Infographic visualization style
+ * - 'icons': Icon-based visualization with emoji/icons per option
+ * - 'leaderboard': Ranked list with medals/badges for top options
+ * - 'cards': Animated stat cards with vote counts and trends
+ */
+export type InfographicStyle = 'icons' | 'leaderboard' | 'cards'
+
+/**
+ * Bar chart orientation
+ * - 'horizontal': Horizontal bars (default)
+ * - 'vertical': Vertical bars/columns
+ */
+export type BarOrientation = 'horizontal' | 'vertical'
+
+/**
  * Represents a poll in the Polypuls3 system
  * Matches PolyPuls3Poll contract structure
  */
