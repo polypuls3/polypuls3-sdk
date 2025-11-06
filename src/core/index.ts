@@ -3,6 +3,9 @@ export { polypuls3PollAbi } from './abis/polypuls3'
 // Re-export with legacy name for backwards compatibility
 export { polypuls3PollAbi as polypuls3Abi } from './abis/polypuls3'
 
+// Contract helpers
+export { fetchPollsFromContract } from './contracts/pollsList'
+
 // Chain configuration
 export {
   supportedChains,
