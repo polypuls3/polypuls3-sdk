@@ -39,6 +39,19 @@ export const GET_POLL = gql`
 `
 
 /**
+ * Query to fetch a single poll by numeric pollId
+ * Used when querying by contract poll ID instead of entity ID
+ */
+export const GET_POLL_BY_POLL_ID = gql`
+  ${POLL_FIELDS}
+  query GetPollByPollId($pollId: BigInt!) {
+    polls(where: { pollId: $pollId }, first: 1) {
+      ...PollFields
+    }
+  }
+`
+
+/**
  * Query to fetch multiple polls with filters
  */
 export const GET_POLLS = gql`
