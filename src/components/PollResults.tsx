@@ -1,7 +1,11 @@
 import clsx from 'clsx'
 import { usePollResults } from '../hooks/usePollResults'
 import { useTheme } from '../hooks/useTheme'
-import type { PollOption } from '../core/types'
+import { usePolyPulseConfig } from '../providers'
+import { PollResultsBar } from './PollResultsBar'
+import { PollResultsPie } from './PollResultsPie'
+import { PollResultsInfographic } from './PollResultsInfographic'
+import type { PollOption, ChartType, InfographicStyle, BarOrientation } from '../core/types'
 
 export interface PollResultsProps {
   pollId: bigint | string
@@ -10,18 +14,38 @@ export interface PollResultsProps {
   className?: string
   showVoteCount?: boolean
   showPercentage?: boolean
+  chartType?: ChartType
+  barOrientation?: BarOrientation
+  infographicStyle?: InfographicStyle
+  chartColors?: string[]
 }
 
 /**
- * PollResults component displays poll voting results with visual bars
+ * PollResults component displays poll voting results with customizable visualizations
  *
  * @example
  * ```tsx
+ * // Bar chart (default)
  * <PollResults
  *   pollId={1n}
  *   options={['Option A', 'Option B', 'Option C']}
  *   showVoteCount
  *   showPercentage
+ * />
+ *
+ * // Pie chart
+ * <PollResults
+ *   pollId={1n}
+ *   options={['Option A', 'Option B']}
+ *   chartType="pie"
+ * />
+ *
+ * // Infographic leaderboard
+ * <PollResults
+ *   pollId={1n}
+ *   options={['Option A', 'Option B']}
+ *   chartType="infographic"
+ *   infographicStyle="leaderboard"
  * />
  * ```
  */
@@ -32,8 +56,19 @@ export function PollResults({
   className,
   showVoteCount = true,
   showPercentage = true,
+  chartType,
+  barOrientation,
+  infographicStyle,
+  chartColors,
 }: PollResultsProps) {
   const { isPremium } = useTheme()
+  const { themeConfig } = usePolyPulseConfig()
+
+  // Determine effective chart type and options from theme or props
+  const effectiveChartType = chartType ?? themeConfig.chartConfig?.defaultType ?? 'bar'
+  const effectiveBarOrientation = barOrientation ?? themeConfig.chartConfig?.barOrientation ?? 'horizontal'
+  const effectiveInfographicStyle = infographicStyle ?? themeConfig.chartConfig?.infographicStyle ?? 'leaderboard'
+  const effectiveColors = chartColors ?? themeConfig.chartConfig?.colors
 
   // Convert options to string array if needed
   const optionStrings: readonly string[] = Array.isArray(options)
@@ -74,65 +109,48 @@ export function PollResults({
     )
   }
 
-  // The results already have text from the options array
-  const displayResults = results
+  // Render appropriate chart type
+  if (effectiveChartType === 'pie') {
+    return (
+      <PollResultsPie
+        results={results}
+        totalVotes={totalVotes}
+        leadingOptionId={leadingOptionId}
+        showVoteCount={showVoteCount}
+        showPercentage={showPercentage}
+        colors={effectiveColors}
+        className={className}
+        isPremium={isPremium}
+      />
+    )
+  }
 
+  if (effectiveChartType === 'infographic') {
+    return (
+      <PollResultsInfographic
+        results={results}
+        totalVotes={totalVotes}
+        leadingOptionId={leadingOptionId}
+        style={effectiveInfographicStyle}
+        showVoteCount={showVoteCount}
+        showPercentage={showPercentage}
+        className={className}
+        isPremium={isPremium}
+      />
+    )
+  }
+
+  // Default: bar chart
   return (
-    <div className={clsx('pp-space-y-3', className)}>
-      {displayResults.map((option) => {
-        const isLeading = option.id === leadingOptionId && totalVotes > 0n
-
-        return (
-          <div key={option.id.toString()} className="pp-space-y-1">
-            <div className="pp-flex pp-items-center pp-justify-between pp-text-sm">
-              <div className="pp-flex pp-items-center pp-gap-2">
-                <span className={clsx(
-                  'pp-font-medium',
-                  isLeading && isPremium ? 'pp-text-success' : 'pp-text-foreground'
-                )}>
-                  {option.text}
-                </span>
-                {isLeading && isPremium && (
-                  <span className="pp-text-success" title="Leading">
-                    👑
-                  </span>
-                )}
-              </div>
-              <div className="pp-flex pp-items-center pp-gap-2 pp-text-muted-foreground">
-                {showVoteCount && (
-                  <span>
-                    {option.voteCount.toString()} vote{option.voteCount !== 1n ? 's' : ''}
-                  </span>
-                )}
-                {showPercentage && (
-                  <span className={clsx(
-                    'pp-font-semibold',
-                    isLeading && isPremium && 'pp-text-success'
-                  )}>
-                    {option.percentage?.toFixed(1)}%
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="pp-relative pp-h-8 pp-bg-muted pp-rounded-polypuls3 pp-overflow-hidden">
-              <div
-                className={clsx(
-                  'pp-progress-bar',
-                  isLeading && isPremium && 'pp-progress-bar-leader',
-                  'pp-absolute pp-inset-y-0 pp-left-0'
-                )}
-                style={{ width: `${option.percentage || 0}%` }}
-              />
-            </div>
-          </div>
-        )
-      })}
-
-      {totalVotes > 0n && (
-        <div className="pp-text-sm pp-text-muted-foreground pp-text-center pp-pt-2">
-          Total votes: {totalVotes.toString()}
-        </div>
-      )}
-    </div>
+    <PollResultsBar
+      results={results}
+      totalVotes={totalVotes}
+      leadingOptionId={leadingOptionId}
+      showVoteCount={showVoteCount}
+      showPercentage={showPercentage}
+      orientation={effectiveBarOrientation}
+      className={className}
+      isPremium={isPremium}
+    />
   )
 }

@@ -37,6 +37,7 @@ export {
   type ThemeBorderRadius,
   type WidgetSize,
   type ConfettiConfig,
+  type ChartConfig,
 } from './config/theme'
 
 // Types
@@ -52,6 +53,9 @@ export type {
   TransactionStatus,
   Polypuls3Error,
   DisplayMode,
+  ChartType,
+  InfographicStyle,
+  BarOrientation,
 } from './types'
 
 export { PollStatus } from './types'

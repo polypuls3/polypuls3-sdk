@@ -83,6 +83,47 @@ export interface ThemeEffects {
 }
 
 /**
+ * Chart customization configuration
+ */
+export interface ChartConfig {
+  /**
+   * Default chart type for results display
+   * @default 'bar'
+   */
+  defaultType?: 'bar' | 'pie' | 'infographic'
+
+  /**
+   * Custom colors for chart elements
+   * If not provided, uses theme primary colors
+   */
+  colors?: string[]
+
+  /**
+   * Show data labels on charts
+   * @default true
+   */
+  showLabels?: boolean
+
+  /**
+   * Animation duration in milliseconds
+   * @default 300
+   */
+  animationDuration?: number
+
+  /**
+   * Default bar orientation
+   * @default 'horizontal'
+   */
+  barOrientation?: 'horizontal' | 'vertical'
+
+  /**
+   * Default infographic style
+   * @default 'leaderboard'
+   */
+  infographicStyle?: 'icons' | 'leaderboard' | 'cards'
+}
+
+/**
  * Complete theme configuration
  */
 export interface ThemeConfig {
@@ -106,6 +147,12 @@ export interface ThemeConfig {
    * Only applies when preset is 'custom'
    */
   effects?: ThemeEffects
+
+  /**
+   * Chart customization
+   * Applies to all presets
+   */
+  chartConfig?: ChartConfig
 
   /**
    * Spacing between elements

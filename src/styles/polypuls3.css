@@ -414,4 +414,50 @@
   .pp-size-large .pp-success-icon {
     @apply pp-w-6 pp-h-6;
   }
+
+  /* ===========================
+     Chart Types Styles
+     =========================== */
+
+  /* Pie Chart Container */
+  .pp-pie-chart-container {
+    @apply pp-w-full;
+  }
+
+  /* Infographic Icon Row */
+  .pp-infographic-icon-row {
+    @apply pp-transition-all pp-duration-200;
+  }
+
+  .pp-theme-premium .pp-infographic-icon-row:hover {
+    @apply pp-shadow-md;
+    transform: translateY(-2px);
+  }
+
+  /* Infographic Leaderboard Row */
+  .pp-infographic-leaderboard-row {
+    @apply pp-transition-all pp-duration-200;
+  }
+
+  .pp-theme-premium .pp-infographic-leaderboard-row:hover {
+    transform: scale(1.02);
+  }
+
+  /* Infographic Card */
+  .pp-infographic-card {
+    @apply pp-transition-all pp-duration-300;
+  }
+
+  .pp-theme-premium .pp-infographic-card {
+    box-shadow: var(--polypuls3-shadow-sm);
+  }
+
+  .pp-theme-premium .pp-infographic-card:hover {
+    box-shadow: var(--polypuls3-shadow-md);
+  }
+
+  /* Vertical Bar Chart Specific Styles */
+  .pp-vertical-bar-container {
+    @apply pp-flex pp-items-end pp-justify-around pp-h-64 pp-gap-2;
+  }
 }
