@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @layer base {
   :root {
     /* Primary color - Polypuls3 purple */
@@ -115,154 +111,215 @@
   }
 }
 
-@layer components {
-  .polypuls3-button {
-    @apply pp-inline-flex pp-items-center pp-justify-center pp-rounded-polypuls3 pp-px-4 pp-py-2 pp-text-sm pp-font-medium pp-transition-colors;
-    @apply focus-visible:pp-outline-none focus-visible:pp-ring-2 focus-visible:pp-ring-offset-2;
-    @apply disabled:pp-pointer-events-none disabled:pp-opacity-50;
-  }
+/* Base component styles - no Tailwind @apply */
+.polypuls3-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--polypuls3-radius);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  transition: background-color 0.2s, opacity 0.2s, transform 0.2s;
+  cursor: pointer;
+  border: none;
+}
 
-  .polypuls3-button-primary {
-    @apply pp-bg-primary pp-text-primary-foreground hover:pp-opacity-90;
-  }
+.polypuls3-button:focus-visible {
+  outline: 2px solid var(--polypuls3-primary);
+  outline-offset: 2px;
+}
 
-  .polypuls3-button-secondary {
-    @apply pp-bg-secondary pp-text-secondary-foreground hover:pp-opacity-90;
-  }
+.polypuls3-button:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
-  .polypuls3-card {
-    @apply pp-rounded-polypuls3 pp-border pp-border-border pp-bg-background pp-p-6 pp-shadow-sm;
-  }
+.polypuls3-button-primary {
+  background-color: var(--polypuls3-primary);
+  color: var(--polypuls3-primary-foreground);
+}
 
-  .polypuls3-input {
-    @apply pp-flex pp-h-10 pp-w-full pp-rounded-polypuls3 pp-border pp-border-border pp-bg-background pp-px-3 pp-py-2 pp-text-sm;
-    @apply placeholder:pp-text-muted-foreground;
-    @apply focus-visible:pp-outline-none focus-visible:pp-ring-2 focus-visible:pp-ring-primary;
-    @apply disabled:pp-cursor-not-allowed disabled:pp-opacity-50;
-  }
+.polypuls3-button-primary:hover:not(:disabled) {
+  opacity: 0.9;
+}
 
-  .polypuls3-label {
-    @apply pp-text-sm pp-font-medium pp-leading-none peer-disabled:pp-cursor-not-allowed peer-disabled:pp-opacity-70;
-  }
+.polypuls3-button-secondary {
+  background-color: var(--polypuls3-secondary);
+  color: var(--polypuls3-secondary-foreground);
+}
 
-  /* Theme: Minimal - Clean, flat design */
-  .pp-theme-minimal .polypuls3-button-primary {
-    @apply pp-bg-primary pp-text-primary-foreground;
-    transition: background-color 0.2s, border-color 0.2s;
-  }
+.polypuls3-button-secondary:hover:not(:disabled) {
+  opacity: 0.9;
+}
 
-  .pp-theme-minimal .polypuls3-button-primary:hover:not(:disabled) {
-    @apply pp-border pp-border-primary;
-    opacity: 0.9;
-  }
+.polypuls3-card {
+  border-radius: var(--polypuls3-radius);
+  border: 1px solid var(--polypuls3-border);
+  background-color: var(--polypuls3-background);
+  padding: 1.5rem;
+  box-shadow: var(--polypuls3-shadow-sm);
+}
 
-  .pp-theme-minimal .polypuls3-card {
-    box-shadow: var(--polypuls3-shadow-sm);
-  }
+.polypuls3-input {
+  display: flex;
+  height: 2.5rem;
+  width: 100%;
+  border-radius: var(--polypuls3-radius);
+  border: 1px solid var(--polypuls3-border);
+  background-color: var(--polypuls3-background);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--polypuls3-foreground);
+}
 
-  .pp-theme-minimal .pp-progress-bar {
-    @apply pp-bg-primary;
-    transition: width 0.3s ease;
-  }
+.polypuls3-input::placeholder {
+  color: var(--polypuls3-muted-foreground);
+}
 
-  .pp-theme-minimal .pp-vote-option {
-    @apply pp-border pp-border-border pp-rounded-polypuls3 pp-transition-colors;
-  }
+.polypuls3-input:focus-visible {
+  outline: none;
+  ring: 2px solid var(--polypuls3-primary);
+}
 
-  .pp-theme-minimal .pp-vote-option:hover {
-    @apply pp-border-primary;
-  }
+.polypuls3-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 
-  /* Theme: Premium - Gradients, shadows, animations */
-  .pp-theme-premium .polypuls3-button-primary {
-    background: linear-gradient(135deg, var(--polypuls3-primary) 0%, var(--polypuls3-primary-dark) 100%);
-    @apply pp-text-primary-foreground;
-    box-shadow: var(--polypuls3-shadow-md);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
+.polypuls3-label {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--polypuls3-foreground);
+}
 
-  .pp-theme-premium .polypuls3-button-primary:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: var(--polypuls3-shadow-lg);
-  }
+/* Theme: Minimal - Clean, flat design */
+.pp-theme-minimal .polypuls3-button-primary {
+  background-color: var(--polypuls3-primary);
+  color: var(--polypuls3-primary-foreground);
+  transition: background-color 0.2s, border-color 0.2s;
+}
 
-  .pp-theme-premium .polypuls3-button-primary:active:not(:disabled) {
-    transform: translateY(0);
-    box-shadow: var(--polypuls3-shadow-md);
-  }
+.pp-theme-minimal .polypuls3-button-primary:hover:not(:disabled) {
+  border: 1px solid var(--polypuls3-primary);
+  opacity: 0.9;
+}
 
-  .pp-theme-premium .polypuls3-card {
-    box-shadow: var(--polypuls3-shadow-md);
-    transition: box-shadow 0.3s, transform 0.3s;
-  }
+.pp-theme-minimal .polypuls3-card {
+  box-shadow: var(--polypuls3-shadow-sm);
+}
 
-  .pp-theme-premium .polypuls3-card:hover {
-    box-shadow: var(--polypuls3-shadow-lg);
-    transform: translateY(-2px);
-  }
+.pp-theme-minimal .pp-progress-bar {
+  background-color: var(--polypuls3-primary);
+  transition: width 0.3s ease;
+}
 
-  .pp-theme-premium .pp-progress-bar {
-    background: linear-gradient(90deg, var(--polypuls3-primary) 0%, var(--polypuls3-primary-light) 100%);
-    position: relative;
-    overflow: hidden;
-    transition: width 0.5s ease;
-  }
+.pp-theme-minimal .pp-vote-option {
+  border: 1px solid var(--polypuls3-border);
+  border-radius: var(--polypuls3-radius);
+  transition: border-color 0.2s, background-color 0.2s;
+}
 
-  .pp-theme-premium .pp-progress-bar::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.3),
-      transparent
-    );
-    animation: polypuls3-shimmer 2s infinite;
-  }
+.pp-theme-minimal .pp-vote-option:hover {
+  border-color: var(--polypuls3-primary);
+}
 
-  .pp-theme-premium .pp-progress-bar-leader {
-    background: linear-gradient(90deg, var(--polypuls3-success) 0%, var(--polypuls3-success-light) 100%);
-  }
+/* Theme: Premium - Gradients, shadows, animations */
+.pp-theme-premium .polypuls3-button-primary {
+  background: linear-gradient(135deg, var(--polypuls3-primary) 0%, var(--polypuls3-primary-dark) 100%);
+  color: var(--polypuls3-primary-foreground);
+  box-shadow: var(--polypuls3-shadow-md);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
 
-  .pp-theme-premium .pp-vote-option {
-    @apply pp-border-2 pp-rounded-polypuls3 pp-transition-all;
-    border-color: transparent;
-    background: linear-gradient(var(--polypuls3-background), var(--polypuls3-background)) padding-box,
-                linear-gradient(135deg, var(--polypuls3-primary), var(--polypuls3-primary-light)) border-box;
-  }
+.pp-theme-premium .polypuls3-button-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--polypuls3-shadow-lg);
+}
 
-  .pp-theme-premium .pp-vote-option:hover {
-    transform: scale(1.02);
-    box-shadow: var(--polypuls3-shadow-md);
-  }
+.pp-theme-premium .polypuls3-button-primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--polypuls3-shadow-md);
+}
 
-  .pp-theme-premium .pp-vote-option-selected {
-    background: linear-gradient(135deg, var(--polypuls3-primary) 0%, var(--polypuls3-primary-light) 100%);
-    @apply pp-text-primary-foreground;
-  }
+.pp-theme-premium .polypuls3-card {
+  box-shadow: var(--polypuls3-shadow-md);
+  transition: box-shadow 0.3s, transform 0.3s;
+}
 
-  /* Utility classes */
-  .pp-gradient-primary {
-    background: linear-gradient(135deg, var(--polypuls3-primary) 0%, var(--polypuls3-primary-light) 100%);
-  }
+.pp-theme-premium .polypuls3-card:hover {
+  box-shadow: var(--polypuls3-shadow-lg);
+  transform: translateY(-2px);
+}
 
-  .pp-gradient-success {
-    background: linear-gradient(135deg, var(--polypuls3-success) 0%, var(--polypuls3-success-light) 100%);
-  }
+.pp-theme-premium .pp-progress-bar {
+  background: linear-gradient(90deg, var(--polypuls3-primary) 0%, var(--polypuls3-primary-light) 100%);
+  position: relative;
+  overflow: hidden;
+  transition: width 0.5s ease;
+}
 
-  .pp-animate-slide-in {
-    animation: polypuls3-slide-in 0.3s ease-out;
-  }
+.pp-theme-premium .pp-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: polypuls3-shimmer 2s infinite;
+}
 
-  .pp-animate-scale-in {
-    animation: polypuls3-scale-in 0.2s ease-out;
-  }
+.pp-theme-premium .pp-progress-bar-leader {
+  background: linear-gradient(90deg, var(--polypuls3-success) 0%, var(--polypuls3-success-light) 100%);
+}
 
-  .pp-animate-pulse {
-    animation: polypuls3-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
+.pp-theme-premium .pp-vote-option {
+  border: 2px solid transparent;
+  border-radius: var(--polypuls3-radius);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  background:
+    linear-gradient(var(--polypuls3-background), var(--polypuls3-background)) padding-box,
+    linear-gradient(135deg, var(--polypuls3-primary), var(--polypuls3-primary-light)) border-box;
+}
+
+.pp-theme-premium .pp-vote-option:hover {
+  transform: scale(1.02);
+  box-shadow: var(--polypuls3-shadow-md);
+}
+
+.pp-theme-premium .pp-vote-option-selected {
+  background: linear-gradient(135deg, var(--polypuls3-primary) 0%, var(--polypuls3-primary-light) 100%);
+  color: var(--polypuls3-primary-foreground);
+}
+
+/* Utility classes */
+.pp-gradient-primary {
+  background: linear-gradient(135deg, var(--polypuls3-primary) 0%, var(--polypuls3-primary-light) 100%);
+}
+
+.pp-gradient-success {
+  background: linear-gradient(135deg, var(--polypuls3-success) 0%, var(--polypuls3-success-light) 100%);
+}
+
+.pp-animate-slide-in {
+  animation: polypuls3-slide-in 0.3s ease-out;
+}
+
+.pp-animate-scale-in {
+  animation: polypuls3-scale-in 0.2s ease-out;
+}
+
+.pp-animate-pulse {
+  animation: polypuls3-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
