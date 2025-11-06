@@ -75,6 +75,7 @@ import { PollWidget } from '@polypuls3/sdk/components'
 
 <PollWidget
   pollId={1n}
+  enableConfetti={true}
   onVoteSuccess={() => console.log('Vote successful!')}
   onVoteError={(error) => console.error(error)}
 />
@@ -273,6 +274,93 @@ export const SUBGRAPH_URLS = {
 }
 ```
 
+## Visual Effects & Confetti
+
+The SDK includes built-in confetti celebration effects that can be triggered on successful votes.
+
+### Basic Usage
+
+Enable confetti on the PollWidget:
+
+```tsx
+import { PollWidget } from '@polypuls3/sdk/components'
+
+<PollWidget
+  pollId={1n}
+  enableConfetti={true}  // Enable confetti on vote success
+/>
+```
+
+### Manual Confetti Trigger
+
+You can also trigger confetti programmatically:
+
+```tsx
+import { celebrateVote } from '@polypuls3/sdk/core'
+
+// Trigger with defaults
+celebrateVote()
+
+// Customize confetti
+celebrateVote({
+  particleCount: 150,
+  spread: 90,
+  colors: ['#ff0000', '#00ff00', '#0000ff'],
+  origin: { x: 0.5, y: 0.5 }
+})
+```
+
+### Constrained Confetti Mode
+
+Limit confetti to widget boundaries instead of the full viewport:
+
+```tsx
+import { celebrateVote } from '@polypuls3/sdk/core'
+
+// With canvas element for constrained mode
+celebrateVote({
+  constrained: true,
+  particleCount: 100,
+  spread: 70,
+}, canvasElement)
+```
+
+### ConfettiConfig Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `particleCount` | `number` | `100` | Number of confetti particles |
+| `spread` | `number` | `70` | Spread angle in degrees |
+| `colors` | `string[]` | `['#8247e5', '#a78bfa', '#22c55e']` | Array of color hex codes |
+| `constrained` | `boolean` | `false` | Constrain to widget boundaries |
+| `origin` | `{ x?: number; y?: number }` | `{ y: 0.6 }` | Spawn point (0-1 range) |
+
+### Theme-Level Configuration
+
+Configure confetti globally through the theme system:
+
+```tsx
+import { PolyPulse3Provider } from '@polypuls3/sdk'
+
+<PolyPulse3Provider
+  config={{
+    themeConfig: {
+      effects: {
+        enableConfetti: true,
+        confettiConfig: {
+          particleCount: 150,
+          spread: 90,
+          colors: ['#8247e5', '#a78bfa', '#22c55e'],
+          constrained: false
+        }
+      }
+    }
+  }}
+>
+  {/* Your app */}
+</PolyPulse3Provider>
+```
+
 ## Core Utilities
 
 The SDK includes helpful utility functions:
@@ -287,8 +375,24 @@ import {
   getTimeRemaining,
   truncateAddress,
   toDuration,
+  celebrateVote,
+  createConfettiInstance,
 } from '@polypuls3/sdk/core'
 ```
+
+**Poll Utilities:**
+- `getPollStatus(poll)` - Get current poll status (active, ended, not_started)
+- `isPollActive(poll)` - Check if poll is currently active
+- `calculateVotePercentages(options)` - Calculate vote percentages for options
+- `formatDuration(seconds)` - Format duration in human-readable string
+- `formatTimestamp(timestamp)` - Format Unix timestamp to date string
+- `getTimeRemaining(expiresAt)` - Get time remaining for a poll
+- `truncateAddress(address)` - Truncate Ethereum address for display
+- `toDuration(value, unit)` - Convert value to duration in seconds
+
+**Confetti Utilities:**
+- `celebrateVote(config?, canvasElement?)` - Trigger confetti celebration
+- `createConfettiInstance(canvas)` - Create constrained confetti instance for a specific canvas
 
 ## Package Exports
 
