@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Primary color - Polypuls3 purple */
+    --polypuls3-primary: #8247e5;
+    --polypuls3-primary-foreground: #ffffff;
+
+    /* Secondary color */
+    --polypuls3-secondary: #64748b;
+    --polypuls3-secondary-foreground: #ffffff;
+
+    /* Semantic colors */
+    --polypuls3-success: #22c55e;
+    --polypuls3-success-foreground: #ffffff;
+    --polypuls3-error: #ef4444;
+    --polypuls3-error-foreground: #ffffff;
+
+    /* Background and foreground */
+    --polypuls3-background: #ffffff;
+    --polypuls3-foreground: #0f172a;
+
+    /* Border and muted */
+    --polypuls3-border: #e2e8f0;
+    --polypuls3-muted: #f1f5f9;
+    --polypuls3-muted-foreground: #64748b;
+
+    /* Border radius */
+    --polypuls3-radius: 0.5rem;
+  }
+
+  .polypuls3-dark {
+    --polypuls3-primary: #a78bfa;
+    --polypuls3-primary-foreground: #1e1b4b;
+
+    --polypuls3-secondary: #475569;
+    --polypuls3-secondary-foreground: #f1f5f9;
+
+    --polypuls3-success: #4ade80;
+    --polypuls3-success-foreground: #14532d;
+    --polypuls3-error: #f87171;
+    --polypuls3-error-foreground: #7f1d1d;
+
+    --polypuls3-background: #0f172a;
+    --polypuls3-foreground: #f1f5f9;
+
+    --polypuls3-border: #334155;
+    --polypuls3-muted: #1e293b;
+    --polypuls3-muted-foreground: #94a3b8;
+  }
+}
+
+@layer components {
+  .polypuls3-button {
+    @apply pp-inline-flex pp-items-center pp-justify-center pp-rounded-polypuls3 pp-px-4 pp-py-2 pp-text-sm pp-font-medium pp-transition-colors;
+    @apply focus-visible:pp-outline-none focus-visible:pp-ring-2 focus-visible:pp-ring-offset-2;
+    @apply disabled:pp-pointer-events-none disabled:pp-opacity-50;
+  }
+
+  .polypuls3-button-primary {
+    @apply pp-bg-primary pp-text-primary-foreground hover:pp-opacity-90;
+  }
+
+  .polypuls3-button-secondary {
+    @apply pp-bg-secondary pp-text-secondary-foreground hover:pp-opacity-90;
+  }
+
+  .polypuls3-card {
+    @apply pp-rounded-polypuls3 pp-border pp-border-border pp-bg-background pp-p-6 pp-shadow-sm;
+  }
+
+  .polypuls3-input {
+    @apply pp-flex pp-h-10 pp-w-full pp-rounded-polypuls3 pp-border pp-border-border pp-bg-background pp-px-3 pp-py-2 pp-text-sm;
+    @apply placeholder:pp-text-muted-foreground;
+    @apply focus-visible:pp-outline-none focus-visible:pp-ring-2 focus-visible:pp-ring-primary;
+    @apply disabled:pp-cursor-not-allowed disabled:pp-opacity-50;
+  }
+
+  .polypuls3-label {
+    @apply pp-text-sm pp-font-medium pp-leading-none peer-disabled:pp-cursor-not-allowed peer-disabled:pp-opacity-70;
+  }
+}

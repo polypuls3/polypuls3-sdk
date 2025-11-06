@@ -1,0 +1,33 @@
+# Source files
+src/
+examples/
+
+# Config files
+.eslintrc.json
+tsconfig.json
+tsup.config.ts
+tailwind.config.js
+postcss.config.js
+
+# Development files
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+__tests__/
+
+# Documentation
+*.md
+!README.md
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+
+# Misc
+node_modules/
+.DS_Store
