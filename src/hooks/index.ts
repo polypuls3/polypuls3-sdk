@@ -1,5 +1,6 @@
 // Export all hooks
 export { usePoll, type UsePollParams, type UsePollReturn } from './usePoll'
+export { usePollsList, type UsePollsListParams, type UsePollsListReturn } from './usePollsList'
 export { useVote, type UseVoteReturn } from './useVote'
 export { useCreatePoll, type UseCreatePollReturn } from './useCreatePoll'
 export {

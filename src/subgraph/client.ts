@@ -29,8 +29,28 @@ export async function fetchPoll(chainId: number, pollId: string): Promise<Poll |
   if (!client) return null
 
   try {
-    const data = await client.request<{ poll: Poll }>(GET_POLL, { id: pollId })
-    return data.poll
+    const data = await client.request<{ poll: any }>(GET_POLL, { id: pollId })
+    if (!data.poll) return null
+
+    // Transform subgraph response to Poll type
+    return {
+      id: data.poll.pollId,
+      creator: data.poll.creator,
+      question: data.poll.question,
+      options: data.poll.options, // Already a string array
+      createdAt: BigInt(data.poll.createdAt),
+      expiresAt: BigInt(data.poll.expiresAt),
+      rewardPool: BigInt(data.poll.rewardPool),
+      isActive: data.poll.isActive,
+      totalResponses: BigInt(data.poll.totalResponses),
+      category: data.poll.category,
+      projectId: BigInt(data.poll.projectId),
+      votingType: data.poll.votingType,
+      visibility: data.poll.visibility,
+      status: parseInt(data.poll.status),
+      platformFeeAmount: BigInt(data.poll.platformFeeAmount),
+      claimedRewards: BigInt(data.poll.claimedRewards),
+    }
   } catch (error) {
     console.error('Error fetching poll from subgraph:', error)
     return null
@@ -66,12 +86,32 @@ export async function fetchPolls(
       variables.creator = creator
     }
 
-    const data = await client.request<{ polls: Poll[] }>(query, variables)
+    const data = await client.request<{ polls: any[] }>(query, variables)
+
+    // Transform subgraph responses to Poll types
+    const polls: Poll[] = data.polls.map((poll) => ({
+      id: poll.pollId,
+      creator: poll.creator,
+      question: poll.question,
+      options: poll.options,
+      createdAt: BigInt(poll.createdAt),
+      expiresAt: BigInt(poll.expiresAt),
+      rewardPool: BigInt(poll.rewardPool),
+      isActive: poll.isActive,
+      totalResponses: BigInt(poll.totalResponses),
+      category: poll.category,
+      projectId: BigInt(poll.projectId),
+      votingType: poll.votingType,
+      visibility: poll.visibility,
+      status: parseInt(poll.status),
+      platformFeeAmount: BigInt(poll.platformFeeAmount),
+      claimedRewards: BigInt(poll.claimedRewards),
+    }))
 
     return {
-      polls: data.polls,
-      total: data.polls.length,
-      hasMore: data.polls.length === limit,
+      polls,
+      total: polls.length,
+      hasMore: polls.length === limit,
     }
   } catch (error) {
     console.error('Error fetching polls from subgraph:', error)
@@ -92,12 +132,19 @@ export async function fetchUserVotes(
   if (!client) return []
 
   try {
-    const data = await client.request<{ votes: UserVote[] }>(GET_USER_VOTES, {
+    const data = await client.request<{ pollResponses: any[] }>(GET_USER_VOTES, {
       voter,
       first: limit,
       skip: offset,
     })
-    return data.votes
+
+    // Transform poll responses to UserVote type
+    return data.pollResponses.map((response) => ({
+      pollId: response.pollId,
+      optionId: response.optionIndex,
+      timestamp: BigInt(response.timestamp),
+      voter: response.respondent,
+    }))
   } catch (error) {
     console.error('Error fetching user votes from subgraph:', error)
     return []

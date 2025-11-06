@@ -2,23 +2,27 @@ import { gql } from 'graphql-request'
 
 /**
  * Fragment for poll fields
+ * Matches the actual subgraph schema
  */
 export const POLL_FIELDS = gql`
   fragment PollFields on Poll {
     id
+    pollId
     creator
-    title
-    description
-    startTime
-    endTime
-    isActive
+    question
+    options
     createdAt
-    totalVotes
-    options {
-      id
-      text
-      voteCount
-    }
+    expiresAt
+    rewardPool
+    isActive
+    totalResponses
+    category
+    projectId
+    votingType
+    visibility
+    status
+    platformFeeAmount
+    claimedRewards
   }
 `
 
@@ -95,28 +99,30 @@ export const GET_POLLS_BY_CREATOR = gql`
 `
 
 /**
- * Query to fetch user votes
+ * Query to fetch user votes (poll responses)
+ * Uses PollResponse entity from the actual schema
  */
 export const GET_USER_VOTES = gql`
   query GetUserVotes($voter: Bytes!, $first: Int = 10, $skip: Int = 0) {
-    votes(
+    pollResponses(
       first: $first
       skip: $skip
       orderBy: timestamp
       orderDirection: desc
-      where: { voter: $voter }
+      where: { respondent: $voter }
     ) {
       id
-      voter
+      pollId
+      respondent
+      optionIndex
+      timestamp
+      rewardClaimed
       poll {
         id
-        title
+        pollId
+        question
+        options
       }
-      option {
-        id
-        text
-      }
-      timestamp
     }
   }
 `

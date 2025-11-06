@@ -12,6 +12,13 @@ export {
   type SupportedChainId,
 } from './config/chains'
 
+// Data source configuration
+export {
+  DEFAULT_DATA_SOURCE_CONFIG,
+  type DataSource,
+  type DataSourceConfig,
+} from './config/dataSource'
+
 // Types
 export type {
   Poll,

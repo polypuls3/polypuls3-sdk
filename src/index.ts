@@ -1,6 +1,9 @@
 // Core exports
 export * from './core'
 
+// Providers
+export * from './providers'
+
 // Hooks exports
 export * from './hooks'
 
