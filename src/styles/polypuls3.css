@@ -1,117 +1,116 @@
-@layer base {
-  :root {
-    /* Primary color - Polypuls3 purple */
-    --polypuls3-primary: #8247e5;
-    --polypuls3-primary-foreground: #ffffff;
-    --polypuls3-primary-light: #a78bfa;
-    --polypuls3-primary-dark: #6d28d9;
+/* CSS Variables */
+:root {
+  /* Primary color - Polypuls3 purple */
+  --polypuls3-primary: #8247e5;
+  --polypuls3-primary-foreground: #ffffff;
+  --polypuls3-primary-light: #a78bfa;
+  --polypuls3-primary-dark: #6d28d9;
 
-    /* Secondary color */
-    --polypuls3-secondary: #64748b;
-    --polypuls3-secondary-foreground: #ffffff;
+  /* Secondary color */
+  --polypuls3-secondary: #64748b;
+  --polypuls3-secondary-foreground: #ffffff;
 
-    /* Semantic colors */
-    --polypuls3-success: #22c55e;
-    --polypuls3-success-foreground: #ffffff;
-    --polypuls3-success-light: #4ade80;
-    --polypuls3-error: #ef4444;
-    --polypuls3-error-foreground: #ffffff;
+  /* Semantic colors */
+  --polypuls3-success: #22c55e;
+  --polypuls3-success-foreground: #ffffff;
+  --polypuls3-success-light: #4ade80;
+  --polypuls3-error: #ef4444;
+  --polypuls3-error-foreground: #ffffff;
 
-    /* Background and foreground */
-    --polypuls3-background: #ffffff;
-    --polypuls3-foreground: #0f172a;
+  /* Background and foreground */
+  --polypuls3-background: #ffffff;
+  --polypuls3-foreground: #0f172a;
 
-    /* Border and muted */
-    --polypuls3-border: #e2e8f0;
-    --polypuls3-muted: #f1f5f9;
-    --polypuls3-muted-foreground: #64748b;
+  /* Border and muted */
+  --polypuls3-border: #e2e8f0;
+  --polypuls3-muted: #f1f5f9;
+  --polypuls3-muted-foreground: #64748b;
 
-    /* Border radius - can be overridden */
-    --polypuls3-radius: 0.5rem;
+  /* Border radius - can be overridden */
+  --polypuls3-radius: 0.5rem;
 
-    /* Spacing multiplier - can be overridden */
-    --polypuls3-spacing: 1;
+  /* Spacing multiplier - can be overridden */
+  --polypuls3-spacing: 1;
 
-    /* Shadow levels - overridden by theme preset */
-    --polypuls3-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --polypuls3-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --polypuls3-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --polypuls3-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --polypuls3-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  /* Shadow levels - overridden by theme preset */
+  --polypuls3-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --polypuls3-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --polypuls3-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --polypuls3-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --polypuls3-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.polypuls3-dark {
+  --polypuls3-primary: #a78bfa;
+  --polypuls3-primary-foreground: #1e1b4b;
+  --polypuls3-primary-light: #c4b5fd;
+  --polypuls3-primary-dark: #8b5cf6;
+
+  --polypuls3-secondary: #475569;
+  --polypuls3-secondary-foreground: #f1f5f9;
+
+  --polypuls3-success: #4ade80;
+  --polypuls3-success-foreground: #14532d;
+  --polypuls3-success-light: #86efac;
+  --polypuls3-error: #f87171;
+  --polypuls3-error-foreground: #7f1d1d;
+
+  --polypuls3-background: #0f172a;
+  --polypuls3-foreground: #f1f5f9;
+
+  --polypuls3-border: #334155;
+  --polypuls3-muted: #1e293b;
+  --polypuls3-muted-foreground: #94a3b8;
+
+  --polypuls3-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.2);
+  --polypuls3-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --polypuls3-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --polypuls3-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --polypuls3-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+}
+
+/* Animation keyframes */
+@keyframes polypuls3-pulse {
+  0%, 100% {
+    opacity: 1;
   }
-
-  .polypuls3-dark {
-    --polypuls3-primary: #a78bfa;
-    --polypuls3-primary-foreground: #1e1b4b;
-    --polypuls3-primary-light: #c4b5fd;
-    --polypuls3-primary-dark: #8b5cf6;
-
-    --polypuls3-secondary: #475569;
-    --polypuls3-secondary-foreground: #f1f5f9;
-
-    --polypuls3-success: #4ade80;
-    --polypuls3-success-foreground: #14532d;
-    --polypuls3-success-light: #86efac;
-    --polypuls3-error: #f87171;
-    --polypuls3-error-foreground: #7f1d1d;
-
-    --polypuls3-background: #0f172a;
-    --polypuls3-foreground: #f1f5f9;
-
-    --polypuls3-border: #334155;
-    --polypuls3-muted: #1e293b;
-    --polypuls3-muted-foreground: #94a3b8;
-
-    --polypuls3-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.2);
-    --polypuls3-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
-    --polypuls3-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-    --polypuls3-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
-    --polypuls3-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
-  }
-
-  /* Animation keyframes */
-  @keyframes polypuls3-pulse {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.8;
-    }
-  }
-
-  @keyframes polypuls3-shimmer {
-    0% {
-      background-position: -1000px 0;
-    }
-    100% {
-      background-position: 1000px 0;
-    }
-  }
-
-  @keyframes polypuls3-slide-in {
-    from {
-      transform: translateY(-10px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes polypuls3-scale-in {
-    from {
-      transform: scale(0.95);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
+  50% {
+    opacity: 0.8;
   }
 }
 
-/* Base component styles - no Tailwind @apply */
+@keyframes polypuls3-shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes polypuls3-slide-in {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes polypuls3-scale-in {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Base component styles */
 .polypuls3-button {
   display: inline-flex;
   align-items: center;
