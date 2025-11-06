@@ -36,6 +36,7 @@ export {
   type ThemeSpacing,
   type ThemeBorderRadius,
   type WidgetSize,
+  type ConfettiConfig,
 } from './config/theme'
 
 // Types
@@ -50,6 +51,7 @@ export type {
   PollsQueryResult,
   TransactionStatus,
   Polypuls3Error,
+  DisplayMode,
 } from './types'
 
 export { PollStatus } from './types'
@@ -64,4 +66,5 @@ export {
   getTimeRemaining,
   truncateAddress,
   toDuration,
+  celebrateVote,
 } from './utils'

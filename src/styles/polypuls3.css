@@ -381,4 +381,37 @@
   .pp-size-large .pp-widget-spacing {
     @apply pp-space-y-3;
   }
+
+  /* ===========================
+     Success Banner
+     =========================== */
+
+  .pp-success-banner {
+    @apply pp-border pp-text-success;
+    @apply pp-rounded-polypuls3 pp-p-3 pp-mb-4;
+    @apply pp-flex pp-items-center pp-gap-2;
+    background-color: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+  }
+
+  .pp-success-icon {
+    @apply pp-w-5 pp-h-5 pp-flex-shrink-0;
+  }
+
+  /* Size-aware variants */
+  .pp-size-small .pp-success-banner {
+    @apply pp-p-2;
+  }
+
+  .pp-size-small .pp-success-icon {
+    @apply pp-w-4 pp-h-4;
+  }
+
+  .pp-size-large .pp-success-banner {
+    @apply pp-p-4;
+  }
+
+  .pp-size-large .pp-success-icon {
+    @apply pp-w-6 pp-h-6;
+  }
 }

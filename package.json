@@ -1,6 +1,6 @@
 {
   "name": "@polypuls3/sdk",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "description": "React SDK for embedding Polypuls3 polls in dapps",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -69,6 +69,7 @@
     "wagmi": "^2.0.0"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
@@ -90,6 +91,7 @@
     "wagmi": "^2.5.0"
   },
   "dependencies": {
+    "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.0",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0"

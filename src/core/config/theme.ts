@@ -33,6 +33,15 @@ export interface ThemeColors {
 }
 
 /**
+ * Confetti configuration
+ */
+export interface ConfettiConfig {
+  particleCount?: number
+  spread?: number
+  colors?: string[]
+}
+
+/**
  * Visual effects configuration
  */
 export interface ThemeEffects {
@@ -59,6 +68,18 @@ export interface ThemeEffects {
    * @default true (premium), false (minimal)
    */
   enableHoverEffects?: boolean
+
+  /**
+   * Enable confetti celebration on vote success
+   * @default true (premium), false (minimal)
+   */
+  enableConfetti?: boolean
+
+  /**
+   * Confetti animation configuration
+   * Only applies when enableConfetti is true
+   */
+  confettiConfig?: ConfettiConfig
 }
 
 /**
@@ -125,6 +146,7 @@ export const MINIMAL_THEME: Partial<ThemeConfig> = {
     enableShadows: false,
     enableAnimations: true, // Keep subtle animations
     enableHoverEffects: false, // No scale/lift
+    enableConfetti: false, // No confetti in minimal theme
   },
 }
 
@@ -138,6 +160,12 @@ export const PREMIUM_THEME: Partial<ThemeConfig> = {
     enableShadows: true,
     enableAnimations: true,
     enableHoverEffects: true,
+    enableConfetti: true, // Enable confetti in premium theme
+    confettiConfig: {
+      particleCount: 100,
+      spread: 70,
+      colors: ['#8247e5', '#a78bfa', '#22c55e']
+    }
   },
 }
 
