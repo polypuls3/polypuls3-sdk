@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import clsx from 'clsx'
 import { usePoll } from '../hooks/usePoll'
 import { useHasVoted } from '../hooks/useHasVoted'
@@ -67,6 +67,9 @@ export function PollWidget({
   // State for success banner
   const [showSuccess, setShowSuccess] = useState(false)
 
+  // Canvas ref for constrained confetti
+  const confettiCanvasRef = useRef<HTMLCanvasElement>(null)
+
   // Use provided size or fall back to global theme size
   const effectiveSize = size ?? themeConfig.size ?? 'medium'
 
@@ -85,7 +88,7 @@ export function PollWidget({
     // Confetti celebration
     const shouldShowConfetti = enableConfetti ?? themeConfig.effects?.enableConfetti ?? false
     if (shouldShowConfetti) {
-      celebrateVote(themeConfig.effects?.confettiConfig)
+      celebrateVote(themeConfig.effects?.confettiConfig, confettiCanvasRef.current)
     }
 
     onVoteSuccess?.()
@@ -151,7 +154,14 @@ export function PollWidget({
 
   return (
     <div className={`pp-size-${effectiveSize}`}>
-      <div className={clsx('polypuls3-card', className)}>
+      <div className={clsx('polypuls3-card', 'pp-confetti-container', className)}>
+        {/* Confetti Canvas */}
+        <canvas
+          ref={confettiCanvasRef}
+          className="pp-confetti-canvas"
+          aria-hidden="true"
+        />
+
         {/* Success Banner */}
         {showSuccess && (
           <div className="pp-success-banner pp-animate-slide-in">
