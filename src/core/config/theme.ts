@@ -39,6 +39,16 @@ export interface ConfettiConfig {
   particleCount?: number
   spread?: number
   colors?: string[]
+  /**
+   * Constrain confetti to widget boundaries instead of full viewport
+   * @default false
+   */
+  constrained?: boolean
+  /**
+   * Origin point for confetti spawn (0-1 range for x and y)
+   * @default { y: 0.6 }
+   */
+  origin?: { x?: number; y?: number }
 }
 
 /**
