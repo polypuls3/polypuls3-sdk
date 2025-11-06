@@ -1,6 +1,6 @@
 {
   "name": "@polypuls3/sdk",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "React SDK for embedding Polypuls3 polls in dapps",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

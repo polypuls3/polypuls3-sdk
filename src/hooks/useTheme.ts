@@ -1,4 +1,4 @@
-import { usePolypulsConfig } from '../providers'
+import { usePolyPulseConfig } from '../providers'
 import type { ThemePreset, ThemeColors } from '../core/config/theme'
 
 /**
@@ -50,7 +50,7 @@ export interface UseThemeReturn {
  * ```
  */
 export function useTheme(): UseThemeReturn {
-  const { themeConfig } = usePolypulsConfig()
+  const { themeConfig } = usePolyPulseConfig()
 
   return {
     preset: themeConfig.preset,

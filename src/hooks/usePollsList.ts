@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import type { PollFilters, PollsQueryResult } from '../core/types'
 import type { DataSource } from '../core/config/dataSource'
-import { usePolypulsConfig } from '../providers'
+import { usePolyPulseConfig } from '../providers'
 import { useSubgraphPolls } from '../subgraph/hooks'
 
 /**
@@ -45,7 +45,7 @@ export interface UsePollsListReturn extends PollsQueryResult {
  * ```
  */
 export function usePollsList(params: UsePollsListParams = {}): UsePollsListReturn {
-  const { dataSourceConfig } = usePolypulsConfig()
+  const { dataSourceConfig } = usePolyPulseConfig()
   const { dataSource: paramSource, ...filters } = params
 
   // Determine which data source to use

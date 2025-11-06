@@ -5,22 +5,22 @@ import type { ThemeConfig } from '../core/config/theme'
 import { DEFAULT_THEME_CONFIG, BORDER_RADIUS_VALUES, SPACING_MULTIPLIERS } from '../core/config/theme'
 
 /**
- * Context for Polypuls3 SDK configuration
+ * Context for PolyPulse SDK configuration
  */
-interface PolypulsContextValue {
+interface PolyPulseContextValue {
   dataSourceConfig: DataSourceConfig
   themeConfig: ThemeConfig
 }
 
-const PolypulsContext = createContext<PolypulsContextValue>({
+const PolyPulseContext = createContext<PolyPulseContextValue>({
   dataSourceConfig: DEFAULT_DATA_SOURCE_CONFIG,
   themeConfig: DEFAULT_THEME_CONFIG,
 })
 
 /**
- * Props for PolypulsProvider
+ * Props for PolyPulseProvider
  */
-export interface PolypulsProviderProps {
+export interface PolyPulseProviderProps {
   children: ReactNode
   /**
    * Data source configuration for the SDK
@@ -35,36 +35,36 @@ export interface PolypulsProviderProps {
 }
 
 /**
- * Provider component for Polypuls3 SDK configuration
+ * Provider component for PolyPulse SDK configuration
  *
  * Wrap your app with this provider to configure SDK behavior globally.
  *
  * @example
  * ```tsx
  * // Minimal theme (default)
- * <PolypulsProvider>
+ * <PolyPulseProvider>
  *   <App />
- * </PolypulsProvider>
+ * </PolyPulseProvider>
  *
  * // Premium theme
- * <PolypulsProvider themeConfig={{ preset: 'premium' }}>
+ * <PolyPulseProvider themeConfig={{ preset: 'premium' }}>
  *   <App />
- * </PolypulsProvider>
+ * </PolyPulseProvider>
  *
  * // Custom colors
- * <PolypulsProvider themeConfig={{
+ * <PolyPulseProvider themeConfig={{
  *   preset: 'premium',
  *   colors: { primary: '#ff6b6b' }
  * }}>
  *   <App />
- * </PolypulsProvider>
+ * </PolyPulseProvider>
  * ```
  */
-export function PolypulsProvider({
+export function PolyPulseProvider({
   children,
   dataSourceConfig = {},
   themeConfig = {},
-}: PolypulsProviderProps) {
+}: PolyPulseProviderProps) {
   const config: DataSourceConfig = {
     ...DEFAULT_DATA_SOURCE_CONFIG,
     ...dataSourceConfig,
@@ -131,22 +131,22 @@ export function PolypulsProvider({
   }, [theme])
 
   return (
-    <PolypulsContext.Provider value={{ dataSourceConfig: config, themeConfig: theme }}>
+    <PolyPulseContext.Provider value={{ dataSourceConfig: config, themeConfig: theme }}>
       <div className={`pp-theme-${theme.preset}`}>{children}</div>
-    </PolypulsContext.Provider>
+    </PolyPulseContext.Provider>
   )
 }
 
 /**
- * Hook to access Polypuls3 SDK configuration
+ * Hook to access PolyPulse SDK configuration
  *
  * @example
  * ```tsx
- * const { dataSourceConfig, themeConfig } = usePolypulsConfig()
+ * const { dataSourceConfig, themeConfig } = usePolyPulseConfig()
  * console.log('Using data source:', dataSourceConfig.source)
  * console.log('Using theme:', themeConfig.preset)
  * ```
  */
-export function usePolypulsConfig(): PolypulsContextValue {
-  return useContext(PolypulsContext)
+export function usePolyPulseConfig(): PolyPulseContextValue {
+  return useContext(PolyPulseContext)
 }

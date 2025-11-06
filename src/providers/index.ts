@@ -1,1 +1,1 @@
-export { PolypulsProvider, usePolypulsConfig, type PolypulsProviderProps } from './PolypulsProvider'
+export { PolyPulseProvider, usePolyPulseConfig, type PolyPulseProviderProps } from './PolyPulseProvider'

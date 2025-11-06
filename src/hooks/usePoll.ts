@@ -3,7 +3,7 @@ import { polypuls3Abi } from '../core/abis/polypuls3'
 import { getPolypuls3Address } from '../core/config/chains'
 import type { Poll } from '../core/types'
 import type { DataSource } from '../core/config/dataSource'
-import { usePolypulsConfig } from '../providers'
+import { usePolyPulseConfig } from '../providers'
 import { useSubgraphPoll } from '../subgraph/hooks'
 
 export interface UsePollParams {
@@ -48,7 +48,7 @@ export interface UsePollReturn {
  * ```
  */
 export function usePoll({ pollId, chainId, dataSource: paramSource }: UsePollParams): UsePollReturn {
-  const { dataSourceConfig } = usePolypulsConfig()
+  const { dataSourceConfig } = usePolyPulseConfig()
   const source = paramSource || dataSourceConfig.source
 
   const contractAddress = chainId ? getPolypuls3Address(chainId) : undefined
