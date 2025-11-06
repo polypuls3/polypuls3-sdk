@@ -1,6 +1,14 @@
 import type { Address } from 'viem'
 
 /**
+ * Display mode for poll widgets
+ * - 'vote': Show voting interface, auto-switches to result after voting
+ * - 'result': Always show results interface
+ * - 'mixed': Auto-switch between vote and result based on vote status (default)
+ */
+export type DisplayMode = 'vote' | 'result' | 'mixed'
+
+/**
  * Represents a poll in the Polypuls3 system
  * Matches PolyPuls3Poll contract structure
  */

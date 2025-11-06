@@ -115,3 +115,6 @@ export function toDuration(value: number, unit: 'minutes' | 'hours' | 'days'): b
   }
   return BigInt(value * multipliers[unit])
 }
+
+// Export effects utilities
+export { celebrateVote, type ConfettiConfig } from './effects'
