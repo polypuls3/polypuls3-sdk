@@ -19,6 +19,21 @@ export {
   type DataSourceConfig,
 } from './config/dataSource'
 
+// Theme configuration
+export {
+  DEFAULT_THEME_CONFIG,
+  MINIMAL_THEME,
+  PREMIUM_THEME,
+  BORDER_RADIUS_VALUES,
+  SPACING_MULTIPLIERS,
+  type ThemeConfig,
+  type ThemePreset,
+  type ThemeColors,
+  type ThemeEffects,
+  type ThemeSpacing,
+  type ThemeBorderRadius,
+} from './config/theme'
+
 // Types
 export type {
   Poll,

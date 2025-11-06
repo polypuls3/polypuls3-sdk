@@ -7,6 +7,8 @@
     /* Primary color - Polypuls3 purple */
     --polypuls3-primary: #8247e5;
     --polypuls3-primary-foreground: #ffffff;
+    --polypuls3-primary-light: #a78bfa;
+    --polypuls3-primary-dark: #6d28d9;
 
     /* Secondary color */
     --polypuls3-secondary: #64748b;
@@ -15,6 +17,7 @@
     /* Semantic colors */
     --polypuls3-success: #22c55e;
     --polypuls3-success-foreground: #ffffff;
+    --polypuls3-success-light: #4ade80;
     --polypuls3-error: #ef4444;
     --polypuls3-error-foreground: #ffffff;
 
@@ -27,19 +30,32 @@
     --polypuls3-muted: #f1f5f9;
     --polypuls3-muted-foreground: #64748b;
 
-    /* Border radius */
+    /* Border radius - can be overridden */
     --polypuls3-radius: 0.5rem;
+
+    /* Spacing multiplier - can be overridden */
+    --polypuls3-spacing: 1;
+
+    /* Shadow levels - overridden by theme preset */
+    --polypuls3-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --polypuls3-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --polypuls3-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --polypuls3-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --polypuls3-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   }
 
   .polypuls3-dark {
     --polypuls3-primary: #a78bfa;
     --polypuls3-primary-foreground: #1e1b4b;
+    --polypuls3-primary-light: #c4b5fd;
+    --polypuls3-primary-dark: #8b5cf6;
 
     --polypuls3-secondary: #475569;
     --polypuls3-secondary-foreground: #f1f5f9;
 
     --polypuls3-success: #4ade80;
     --polypuls3-success-foreground: #14532d;
+    --polypuls3-success-light: #86efac;
     --polypuls3-error: #f87171;
     --polypuls3-error-foreground: #7f1d1d;
 
@@ -49,6 +65,53 @@
     --polypuls3-border: #334155;
     --polypuls3-muted: #1e293b;
     --polypuls3-muted-foreground: #94a3b8;
+
+    --polypuls3-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.2);
+    --polypuls3-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+    --polypuls3-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+    --polypuls3-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+    --polypuls3-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+  }
+
+  /* Animation keyframes */
+  @keyframes polypuls3-pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes polypuls3-shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  @keyframes polypuls3-slide-in {
+    from {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes polypuls3-scale-in {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
 }
 
@@ -80,5 +143,126 @@
 
   .polypuls3-label {
     @apply pp-text-sm pp-font-medium pp-leading-none peer-disabled:pp-cursor-not-allowed peer-disabled:pp-opacity-70;
+  }
+
+  /* Theme: Minimal - Clean, flat design */
+  .pp-theme-minimal .polypuls3-button-primary {
+    @apply pp-bg-primary pp-text-primary-foreground;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+
+  .pp-theme-minimal .polypuls3-button-primary:hover:not(:disabled) {
+    @apply pp-border pp-border-primary;
+    opacity: 0.9;
+  }
+
+  .pp-theme-minimal .polypuls3-card {
+    box-shadow: var(--polypuls3-shadow-sm);
+  }
+
+  .pp-theme-minimal .pp-progress-bar {
+    @apply pp-bg-primary;
+    transition: width 0.3s ease;
+  }
+
+  .pp-theme-minimal .pp-vote-option {
+    @apply pp-border pp-border-border pp-rounded-polypuls3 pp-transition-colors;
+  }
+
+  .pp-theme-minimal .pp-vote-option:hover {
+    @apply pp-border-primary;
+  }
+
+  /* Theme: Premium - Gradients, shadows, animations */
+  .pp-theme-premium .polypuls3-button-primary {
+    background: linear-gradient(135deg, var(--polypuls3-primary) 0%, var(--polypuls3-primary-dark) 100%);
+    @apply pp-text-primary-foreground;
+    box-shadow: var(--polypuls3-shadow-md);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .pp-theme-premium .polypuls3-button-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--polypuls3-shadow-lg);
+  }
+
+  .pp-theme-premium .polypuls3-button-primary:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: var(--polypuls3-shadow-md);
+  }
+
+  .pp-theme-premium .polypuls3-card {
+    box-shadow: var(--polypuls3-shadow-md);
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+
+  .pp-theme-premium .polypuls3-card:hover {
+    box-shadow: var(--polypuls3-shadow-lg);
+    transform: translateY(-2px);
+  }
+
+  .pp-theme-premium .pp-progress-bar {
+    background: linear-gradient(90deg, var(--polypuls3-primary) 0%, var(--polypuls3-primary-light) 100%);
+    position: relative;
+    overflow: hidden;
+    transition: width 0.5s ease;
+  }
+
+  .pp-theme-premium .pp-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    animation: polypuls3-shimmer 2s infinite;
+  }
+
+  .pp-theme-premium .pp-progress-bar-leader {
+    background: linear-gradient(90deg, var(--polypuls3-success) 0%, var(--polypuls3-success-light) 100%);
+  }
+
+  .pp-theme-premium .pp-vote-option {
+    @apply pp-border-2 pp-rounded-polypuls3 pp-transition-all;
+    border-color: transparent;
+    background: linear-gradient(var(--polypuls3-background), var(--polypuls3-background)) padding-box,
+                linear-gradient(135deg, var(--polypuls3-primary), var(--polypuls3-primary-light)) border-box;
+  }
+
+  .pp-theme-premium .pp-vote-option:hover {
+    transform: scale(1.02);
+    box-shadow: var(--polypuls3-shadow-md);
+  }
+
+  .pp-theme-premium .pp-vote-option-selected {
+    background: linear-gradient(135deg, var(--polypuls3-primary) 0%, var(--polypuls3-primary-light) 100%);
+    @apply pp-text-primary-foreground;
+  }
+
+  /* Utility classes */
+  .pp-gradient-primary {
+    background: linear-gradient(135deg, var(--polypuls3-primary) 0%, var(--polypuls3-primary-light) 100%);
+  }
+
+  .pp-gradient-success {
+    background: linear-gradient(135deg, var(--polypuls3-success) 0%, var(--polypuls3-success-light) 100%);
+  }
+
+  .pp-animate-slide-in {
+    animation: polypuls3-slide-in 0.3s ease-out;
+  }
+
+  .pp-animate-scale-in {
+    animation: polypuls3-scale-in 0.2s ease-out;
+  }
+
+  .pp-animate-pulse {
+    animation: polypuls3-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 }

@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import { usePollResults } from '../hooks/usePollResults'
+import { useTheme } from '../hooks/useTheme'
 import type { PollOption } from '../core/types'
 
 export interface PollResultsProps {
@@ -32,6 +33,8 @@ export function PollResults({
   showVoteCount = true,
   showPercentage = true,
 }: PollResultsProps) {
+  const { isPremium } = useTheme()
+
   // Convert options to string array if needed
   const optionStrings: readonly string[] = Array.isArray(options)
     ? options.map((opt) => (typeof opt === 'string' ? opt : opt.text))
@@ -42,6 +45,13 @@ export function PollResults({
     options: optionStrings,
     chainId,
   })
+
+  // Find the leading option (highest percentage)
+  const leadingOptionId = results.length > 0
+    ? results.reduce((prev, current) =>
+        (current.percentage || 0) > (prev.percentage || 0) ? current : prev
+      ).id
+    : null
 
   if (isLoading) {
     return (
@@ -69,29 +79,54 @@ export function PollResults({
 
   return (
     <div className={clsx('pp-space-y-3', className)}>
-      {displayResults.map((option) => (
-        <div key={option.id.toString()} className="pp-space-y-1">
-          <div className="pp-flex pp-items-center pp-justify-between pp-text-sm">
-            <span className="pp-font-medium pp-text-foreground">{option.text}</span>
-            <div className="pp-flex pp-items-center pp-gap-2 pp-text-muted-foreground">
-              {showVoteCount && (
-                <span>
-                  {option.voteCount.toString()} vote{option.voteCount !== 1n ? 's' : ''}
+      {displayResults.map((option) => {
+        const isLeading = option.id === leadingOptionId && totalVotes > 0n
+
+        return (
+          <div key={option.id.toString()} className="pp-space-y-1">
+            <div className="pp-flex pp-items-center pp-justify-between pp-text-sm">
+              <div className="pp-flex pp-items-center pp-gap-2">
+                <span className={clsx(
+                  'pp-font-medium',
+                  isLeading && isPremium ? 'pp-text-success' : 'pp-text-foreground'
+                )}>
+                  {option.text}
                 </span>
-              )}
-              {showPercentage && (
-                <span className="pp-font-semibold">{option.percentage?.toFixed(1)}%</span>
-              )}
+                {isLeading && isPremium && (
+                  <span className="pp-text-success" title="Leading">
+                    👑
+                  </span>
+                )}
+              </div>
+              <div className="pp-flex pp-items-center pp-gap-2 pp-text-muted-foreground">
+                {showVoteCount && (
+                  <span>
+                    {option.voteCount.toString()} vote{option.voteCount !== 1n ? 's' : ''}
+                  </span>
+                )}
+                {showPercentage && (
+                  <span className={clsx(
+                    'pp-font-semibold',
+                    isLeading && isPremium && 'pp-text-success'
+                  )}>
+                    {option.percentage?.toFixed(1)}%
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="pp-relative pp-h-8 pp-bg-muted pp-rounded-polypuls3 pp-overflow-hidden">
+              <div
+                className={clsx(
+                  'pp-progress-bar',
+                  isLeading && isPremium && 'pp-progress-bar-leader',
+                  'pp-absolute pp-inset-y-0 pp-left-0'
+                )}
+                style={{ width: `${option.percentage || 0}%` }}
+              />
             </div>
           </div>
-          <div className="pp-relative pp-h-8 pp-bg-muted pp-rounded-polypuls3 pp-overflow-hidden">
-            <div
-              className="pp-absolute pp-inset-y-0 pp-left-0 pp-bg-primary pp-transition-all pp-duration-500"
-              style={{ width: `${option.percentage || 0}%` }}
-            />
-          </div>
-        </div>
-      ))}
+        )
+      })}
 
       {totalVotes > 0n && (
         <div className="pp-text-sm pp-text-muted-foreground pp-text-center pp-pt-2">

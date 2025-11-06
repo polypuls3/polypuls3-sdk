@@ -13,3 +13,4 @@ export {
   type UseHasVotedParams,
   type UseHasVotedReturn,
 } from './useHasVoted'
+export { useTheme, type UseThemeReturn } from './useTheme'
