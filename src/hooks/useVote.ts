@@ -50,11 +50,14 @@ export function useVote(): UseVoteReturn {
       throw new Error('Contract address not found for current chain')
     }
 
+    // Note: respondToPoll requires _respondent address as first param
+    // This should be called from a contract that passes msg.sender
+    // For direct user calls, use a different pattern
     writeContract({
       address,
       abi: polypuls3Abi,
-      functionName: 'vote',
-      args: [BigInt(pollId), BigInt(optionId)],
+      functionName: 'respondToPoll',
+      args: [address, BigInt(pollId), BigInt(optionId)],
     })
   }
 

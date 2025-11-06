@@ -53,18 +53,30 @@ export function useCreatePoll(): UseCreatePollReturn {
     hash,
   })
 
-  const createPoll = ({ title, description, options, duration }: CreatePollParams) => {
-    const address = getPolypuls3Address(1) // Default to mainnet, should get from wagmi config
+  const createPoll = ({ title, options, duration, metadata }: CreatePollParams) => {
+    const contractAddress = getPolypuls3Address(1) // Default to mainnet, should get from wagmi config
 
-    if (!address) {
+    if (!contractAddress) {
       throw new Error('Contract address not found for current chain')
     }
 
+    // createPoll signature: (address _creator, string _question, string[] _options,
+    // uint256 _durationInDays, string _category, uint256 _projectId, string _votingType, string _visibility)
+    // Note: We'll use address(0) for _creator to let the contract use msg.sender
     writeContract({
-      address,
+      address: contractAddress as `0x${string}`,
       abi: polypuls3Abi,
       functionName: 'createPoll',
-      args: [title, description, options, duration],
+      args: [
+        contractAddress, // _creator (will be overridden by contract to msg.sender)
+        title, // _question
+        options, // _options
+        duration, // _durationInDays
+        metadata?.category || '', // _category
+        BigInt(metadata?.projectId || 0), // _projectId (note: need to add to CreatePollParams)
+        'standard', // _votingType
+        'public', // _visibility
+      ],
     })
   }
 

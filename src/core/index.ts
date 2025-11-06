@@ -1,5 +1,7 @@
 // ABIs
-export { polypuls3Abi } from './abis/polypuls3'
+export { polypuls3PollAbi } from './abis/polypuls3'
+// Re-export with legacy name for backwards compatibility
+export { polypuls3PollAbi as polypuls3Abi } from './abis/polypuls3'
 
 // Chain configuration
 export {

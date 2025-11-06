@@ -54,12 +54,20 @@ export function usePoll({ pollId, chainId }: UsePollParams): UsePollReturn {
     ? {
         id: pollData.id,
         creator: pollData.creator,
-        title: pollData.title,
-        description: pollData.description,
-        options: [], // Options would need to be fetched separately or included in contract response
-        startTime: pollData.startTime,
-        endTime: pollData.endTime,
+        question: pollData.question,
+        options: pollData.options,
+        createdAt: pollData.createdAt,
+        expiresAt: pollData.expiresAt,
+        rewardPool: pollData.rewardPool,
         isActive: pollData.isActive,
+        totalResponses: pollData.totalResponses,
+        category: pollData.category,
+        projectId: pollData.projectId,
+        votingType: pollData.votingType,
+        visibility: pollData.visibility,
+        status: pollData.status,
+        platformFeeAmount: pollData.platformFeeAmount,
+        claimedRewards: pollData.claimedRewards,
       }
     : undefined
 

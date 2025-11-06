@@ -1,10 +1,9 @@
 /**
  * Subgraph endpoints for different networks
- * TODO: Replace with your actual subgraph URLs
  */
 export const SUBGRAPH_URLS = {
-  137: 'https://api.studio.thegraph.com/query/<your-subgraph-id>/polypuls3-polygon/version/latest', // Polygon Mainnet
-  80002: 'https://api.studio.thegraph.com/query/<your-subgraph-id>/polypuls3-amoy/version/latest', // Amoy Testnet
+  137: 'https://api.studio.thegraph.com/query/122132/polypuls3-polygon/version/latest', // Polygon Mainnet (TODO: Deploy)
+  80002: 'https://api.studio.thegraph.com/query/122132/polypuls-3-subgraph/version/latest', // Amoy Testnet
 } as const
 
 export type SupportedSubgraphChainId = keyof typeof SUBGRAPH_URLS

@@ -4,8 +4,7 @@ import type { PollOption } from '../core/types'
 
 export interface PollResultsProps {
   pollId: bigint | string
-  optionCount: number
-  options?: PollOption[] // Optional: provide option text
+  options: readonly string[] | PollOption[] // Array of option texts or PollOption objects
   chainId?: number
   className?: string
   showVoteCount?: boolean
@@ -19,12 +18,7 @@ export interface PollResultsProps {
  * ```tsx
  * <PollResults
  *   pollId={1n}
- *   optionCount={3}
- *   options={[
- *     { id: 0n, text: 'Option A', voteCount: 0n },
- *     { id: 1n, text: 'Option B', voteCount: 0n },
- *     { id: 2n, text: 'Option C', voteCount: 0n },
- *   ]}
+ *   options={['Option A', 'Option B', 'Option C']}
  *   showVoteCount
  *   showPercentage
  * />
@@ -32,23 +26,27 @@ export interface PollResultsProps {
  */
 export function PollResults({
   pollId,
-  optionCount,
   options,
   chainId,
   className,
   showVoteCount = true,
   showPercentage = true,
 }: PollResultsProps) {
+  // Convert options to string array if needed
+  const optionStrings: readonly string[] = Array.isArray(options)
+    ? options.map((opt) => (typeof opt === 'string' ? opt : opt.text))
+    : []
+
   const { results, totalVotes, isLoading, isError } = usePollResults({
     pollId,
-    optionCount,
+    options: optionStrings,
     chainId,
   })
 
   if (isLoading) {
     return (
       <div className={clsx('pp-space-y-3', className)}>
-        {Array.from({ length: optionCount }).map((_, i) => (
+        {Array.from({ length: options?.length || 3 }).map((_, i) => (
           <div key={i} className="pp-animate-pulse">
             <div className="pp-h-4 pp-bg-muted pp-rounded pp-mb-2"></div>
             <div className="pp-h-8 pp-bg-muted pp-rounded"></div>
@@ -66,14 +64,8 @@ export function PollResults({
     )
   }
 
-  // Merge with provided options to get text
-  const displayResults = results.map((result) => {
-    const optionData = options?.find((opt) => opt.id === result.id)
-    return {
-      ...result,
-      text: optionData?.text || result.text,
-    }
-  })
+  // The results already have text from the options array
+  const displayResults = results
 
   return (
     <div className={clsx('pp-space-y-3', className)}>

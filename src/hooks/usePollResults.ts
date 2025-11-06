@@ -6,7 +6,7 @@ import type { PollOption } from '../core/types'
 
 export interface UsePollResultsParams {
   pollId: bigint | string
-  optionCount: number // Number of options in the poll
+  options?: readonly string[] // Array of option texts
   chainId?: number
 }
 
@@ -26,7 +26,7 @@ export interface UsePollResultsReturn {
  * ```tsx
  * const { results, totalVotes, isLoading } = usePollResults({
  *   pollId: 1n,
- *   optionCount: 3,
+ *   options: ['Yes', 'No', 'Maybe'],
  * })
  *
  * if (isLoading) return <div>Loading results...</div>
@@ -44,36 +44,37 @@ export interface UsePollResultsReturn {
  */
 export function usePollResults({
   pollId,
-  optionCount,
+  options,
   chainId,
 }: UsePollResultsParams): UsePollResultsReturn {
   const contractAddress = chainId ? getPolypuls3Address(chainId) : undefined
 
-  // Fetch vote counts for all options
-  // Note: This is a simplified implementation. In practice, you might want to
-  // batch these calls or fetch from subgraph for better performance
-  const voteCountQueries = Array.from({ length: optionCount }, (_, i) => {
-    return useReadContract({
-      address: contractAddress,
-      abi: polypuls3Abi,
-      functionName: 'getVoteCount',
-      args: [BigInt(pollId), BigInt(i)],
-      query: {
-        enabled: !!contractAddress,
-      },
-    })
+  // Fetch vote counts for all options using getPollResults
+  const {
+    data: voteCounts,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useReadContract({
+    address: contractAddress,
+    abi: polypuls3Abi,
+    functionName: 'getPollResults',
+    args: [BigInt(pollId)],
+    query: {
+      enabled: !!contractAddress,
+    },
   })
 
-  const isLoading = voteCountQueries.some((q) => q.isLoading)
-  const isError = voteCountQueries.some((q) => q.isError)
-  const error = voteCountQueries.find((q) => q.error)?.error as Error | null
-
   // Build results array
-  const rawResults: PollOption[] = voteCountQueries.map((query, index) => ({
-    id: BigInt(index),
-    text: `Option ${index + 1}`, // TODO: Fetch actual option text
-    voteCount: query.data ? BigInt(query.data.toString()) : 0n,
-  }))
+  const rawResults: PollOption[] =
+    voteCounts && options
+      ? options.map((text, index) => ({
+          id: BigInt(index),
+          text: typeof text === 'string' ? text : `Option ${index + 1}`,
+          voteCount: voteCounts[index] || 0n,
+        }))
+      : []
 
   // Calculate percentages
   const results = calculateVotePercentages(rawResults)
@@ -81,16 +82,12 @@ export function usePollResults({
   // Calculate total votes
   const totalVotes = results.reduce((sum, option) => sum + option.voteCount, 0n)
 
-  const refetch = () => {
-    voteCountQueries.forEach((query) => query.refetch())
-  }
-
   return {
     results,
     totalVotes,
     isLoading,
     isError,
-    error,
+    error: error as Error | null,
     refetch,
   }
 }

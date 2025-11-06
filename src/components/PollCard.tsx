@@ -42,7 +42,7 @@ export function PollCard({ poll, onClick, className }: PollCardProps) {
       <div className="pp-flex pp-items-start pp-justify-between pp-mb-4">
         <div className="pp-flex-1">
           <h3 className="pp-text-lg pp-font-semibold pp-text-foreground pp-mb-1">
-            {poll.title}
+            {poll.question}
           </h3>
           <p className="pp-text-sm pp-text-muted-foreground">
             by {truncateAddress(poll.creator)}
@@ -58,22 +58,22 @@ export function PollCard({ poll, onClick, className }: PollCardProps) {
         </span>
       </div>
 
-      <p className="pp-text-sm pp-text-foreground pp-mb-4 pp-line-clamp-2">
-        {poll.description}
-      </p>
+      {poll.category && (
+        <p className="pp-text-sm pp-text-foreground pp-mb-4 pp-line-clamp-2">
+          Category: {poll.category}
+        </p>
+      )}
 
       <div className="pp-flex pp-items-center pp-justify-between pp-text-xs pp-text-muted-foreground">
         <div className="pp-flex pp-items-center pp-gap-4">
           <span>
             {poll.options?.length || 0} option{poll.options?.length !== 1 ? 's' : ''}
           </span>
-          {poll.totalVotes !== undefined && (
-            <span>
-              {poll.totalVotes.toString()} vote{poll.totalVotes !== 1n ? 's' : ''}
-            </span>
-          )}
+          <span>
+            {poll.totalResponses.toString()} vote{poll.totalResponses !== 1n ? 's' : ''}
+          </span>
         </div>
-        <span>Ends {formatTimestamp(poll.endTime)}</span>
+        <span>Ends {formatTimestamp(poll.expiresAt)}</span>
       </div>
     </div>
   )

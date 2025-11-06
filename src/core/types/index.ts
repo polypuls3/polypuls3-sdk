@@ -2,19 +2,25 @@ import type { Address } from 'viem'
 
 /**
  * Represents a poll in the Polypuls3 system
+ * Matches PolyPuls3Poll contract structure
  */
 export interface Poll {
   id: string | bigint
   creator: Address
-  title: string
-  description: string
-  options: PollOption[]
-  startTime: bigint
-  endTime: bigint
+  question: string // Poll question (contract uses 'question' not 'title')
+  options: readonly string[] | PollOption[] // Array of option strings
+  createdAt: bigint // Unix timestamp when poll was created
+  expiresAt: bigint // Unix timestamp when poll expires
+  rewardPool: bigint // Total reward pool for the poll
   isActive: boolean
-  totalVotes?: bigint
-  createdAt?: bigint
-  metadata?: PollMetadata
+  totalResponses: bigint // Number of responses/votes
+  category: string
+  projectId: bigint
+  votingType: string
+  visibility: string
+  status: number // PollStatus enum (0-5)
+  platformFeeAmount: bigint
+  claimedRewards: bigint
 }
 
 /**
@@ -32,6 +38,7 @@ export interface PollOption {
  */
 export interface PollMetadata {
   category?: string
+  projectId?: number
   tags?: string[]
   imageUrl?: string
   externalUrl?: string
@@ -39,12 +46,13 @@ export interface PollMetadata {
 
 /**
  * Parameters for creating a new poll
+ * Note: Matches PolyPuls3Poll.createPoll function signature
  */
 export interface CreatePollParams {
-  title: string
-  description: string
-  options: string[]
-  duration: bigint // Duration in seconds
+  title: string // Poll question
+  description?: string // Not used in contract, kept for backwards compatibility
+  options: string[] // Array of option texts
+  duration: bigint // Duration in days (not seconds!)
   metadata?: PollMetadata
 }
 

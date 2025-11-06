@@ -39,49 +39,35 @@ export function useHasVoted({
   const voterAddress = voter || connectedAddress
   const contractAddress = chainId ? getPolypuls3Address(chainId) : undefined
 
+  // Note: The contract uses pollResponses mapping to track votes
+  // We read the user's response from the mapping
   const {
-    data: hasVoted,
-    isLoading: hasVotedLoading,
-    isError: hasVotedError,
-    error: hasVotedErrorObj,
-    refetch: refetchHasVoted,
+    data: responseData,
+    isLoading,
+    isError,
+    error,
+    refetch,
   } = useReadContract({
     address: contractAddress,
     abi: polypuls3Abi,
-    functionName: 'hasVoted',
+    functionName: 'pollResponses',
     args: voterAddress ? [BigInt(pollId), voterAddress] : undefined,
     query: {
       enabled: !!contractAddress && !!voterAddress,
     },
   })
 
-  const {
-    data: userVote,
-    isLoading: userVoteLoading,
-    isError: userVoteError,
-    error: userVoteErrorObj,
-    refetch: refetchUserVote,
-  } = useReadContract({
-    address: contractAddress,
-    abi: polypuls3Abi,
-    functionName: 'getUserVote',
-    args: voterAddress ? [BigInt(pollId), voterAddress] : undefined,
-    query: {
-      enabled: !!contractAddress && !!voterAddress && hasVoted === true,
-    },
-  })
-
-  const refetch = () => {
-    refetchHasVoted()
-    refetchUserVote()
-  }
+  // pollResponses returns a tuple: [pollId, respondent, optionIndex, timestamp, rewardClaimed]
+  // If pollId === 0, the user hasn't voted
+  const hasVoted = responseData && responseData[0] !== 0n
+  const userVote = hasVoted && responseData ? responseData[2] : undefined
 
   return {
     hasVoted: hasVoted ?? false,
-    userVote: userVote ? BigInt(userVote.toString()) : undefined,
-    isLoading: hasVotedLoading || userVoteLoading,
-    isError: hasVotedError || userVoteError,
-    error: (hasVotedErrorObj || userVoteErrorObj) as Error | null,
+    userVote,
+    isLoading,
+    isError,
+    error: error as Error | null,
     refetch,
   }
 }

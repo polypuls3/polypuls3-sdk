@@ -3,16 +3,18 @@ import { PollStatus } from '../types'
 
 /**
  * Get the current status of a poll based on timestamps
+ * Note: Uses expiresAt instead of endTime
  */
 export function getPollStatus(poll: Poll): PollStatus {
   const now = BigInt(Math.floor(Date.now() / 1000))
 
-  if (now < poll.startTime) {
-    return 'not_started' as PollStatus.NotStarted
+  // Check contract status first (0=ACTIVE, 1=ENDED, 2=CLAIMING_ENABLED, 3=CLAIMING_DISABLED, 4=CLOSED)
+  if (poll.status === 1 || poll.status === 4 || now > poll.expiresAt) {
+    return 'ended' as PollStatus.Ended
   }
 
-  if (now > poll.endTime) {
-    return 'ended' as PollStatus.Ended
+  if (now < poll.createdAt) {
+    return 'not_started' as PollStatus.NotStarted
   }
 
   return 'active' as PollStatus.Active
@@ -69,8 +71,9 @@ export function formatTimestamp(timestamp: bigint): string {
 
 /**
  * Get time remaining for a poll
+ * @param expiresAt - Unix timestamp when poll expires
  */
-export function getTimeRemaining(endTime: bigint): {
+export function getTimeRemaining(expiresAt: bigint): {
   days: number
   hours: number
   minutes: number
@@ -78,7 +81,7 @@ export function getTimeRemaining(endTime: bigint): {
   isExpired: boolean
 } {
   const now = Math.floor(Date.now() / 1000)
-  const end = Number(endTime)
+  const end = Number(expiresAt)
   const diff = end - now
 
   if (diff <= 0) {

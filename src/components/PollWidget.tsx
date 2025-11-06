@@ -66,7 +66,7 @@ export function PollWidget({
   }
 
   const status = getPollStatus(poll)
-  const timeRemaining = getTimeRemaining(poll.endTime)
+  const timeRemaining = getTimeRemaining(poll.expiresAt)
   const shouldShowResults = showResults || hasVoted || status === 'ended'
 
   return (
@@ -74,7 +74,7 @@ export function PollWidget({
       {/* Header */}
       <div className="pp-mb-4">
         <div className="pp-flex pp-items-start pp-justify-between pp-mb-2">
-          <h2 className="pp-text-2xl pp-font-bold pp-text-foreground">{poll.title}</h2>
+          <h2 className="pp-text-2xl pp-font-bold pp-text-foreground">{poll.question}</h2>
           <span
             className={clsx(
               'pp-px-3 pp-py-1 pp-rounded-full pp-text-xs pp-font-medium',
@@ -88,7 +88,9 @@ export function PollWidget({
             {status === 'not_started' && 'Not Started'}
           </span>
         </div>
-        <p className="pp-text-foreground pp-mb-3">{poll.description}</p>
+        {poll.category && (
+          <p className="pp-text-foreground pp-mb-3">Category: {poll.category}</p>
+        )}
 
         {/* Time info */}
         <div className="pp-text-sm pp-text-muted-foreground">
@@ -98,8 +100,8 @@ export function PollWidget({
               {timeRemaining.hours}h {timeRemaining.minutes}m
             </p>
           )}
-          {status === 'ended' && <p>Ended {formatTimestamp(poll.endTime)}</p>}
-          {status === 'not_started' && <p>Starts {formatTimestamp(poll.startTime)}</p>}
+          {status === 'ended' && <p>Ended {formatTimestamp(poll.expiresAt)}</p>}
+          {status === 'not_started' && <p>Created {formatTimestamp(poll.createdAt)}</p>}
         </div>
       </div>
 
@@ -114,8 +116,7 @@ export function PollWidget({
           )}
           <PollResults
             pollId={pollId}
-            optionCount={poll.options?.length || 0}
-            options={poll.options}
+            options={poll.options as readonly string[]}
             chainId={chainId}
             showVoteCount
             showPercentage
@@ -125,21 +126,24 @@ export function PollWidget({
         <div>
           <h3 className="pp-text-lg pp-font-semibold pp-mb-3">Cast your vote</h3>
           <div className="pp-space-y-2">
-            {poll.options?.map((option) => (
-              <div
-                key={option.id.toString()}
-                className="pp-flex pp-items-center pp-justify-between pp-p-4 pp-border pp-border-border pp-rounded-polypuls3 hover:pp-border-primary pp-transition-colors"
-              >
-                <span className="pp-text-foreground">{option.text}</span>
-                <VoteButton
-                  pollId={pollId}
-                  optionId={option.id}
-                  onSuccess={handleVoteSuccess}
-                  onError={onVoteError}
-                  disabled={status !== 'active'}
-                />
-              </div>
-            ))}
+            {poll.options?.map((option, index) => {
+              const optionText = typeof option === 'string' ? option : option.text
+              return (
+                <div
+                  key={index}
+                  className="pp-flex pp-items-center pp-justify-between pp-p-4 pp-border pp-border-border pp-rounded-polypuls3 hover:pp-border-primary pp-transition-colors"
+                >
+                  <span className="pp-text-foreground">{optionText}</span>
+                  <VoteButton
+                    pollId={pollId}
+                    optionId={BigInt(index)}
+                    onSuccess={handleVoteSuccess}
+                    onError={onVoteError}
+                    disabled={status !== 'active'}
+                  />
+                </div>
+              )
+            })}
           </div>
         </div>
       )}
