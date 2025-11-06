@@ -2,6 +2,8 @@
 
 React SDK for embedding Polypuls3 polls in decentralized applications on Polygon.
 
+**[🚀 View Live Demo](https://p3demo.vercel.app/)**
+
 ## Features
 
 - 🎨 **Pre-built UI Components** - Ready-to-use React components with customizable theming
@@ -457,6 +459,7 @@ For issues and questions:
 
 ## Links
 
+- [Live Demo](https://p3demo.vercel.app/)
 - [Polypuls3 Website](https://polypuls3.com)
 - [Documentation](https://docs.polypuls3.com)
 - [GitHub](https://github.com/your-org/polypuls3-sdk)
