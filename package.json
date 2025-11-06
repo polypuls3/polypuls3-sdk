@@ -1,6 +1,6 @@
 {
   "name": "@polypuls3/sdk",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "React SDK for embedding Polypuls3 polls in dapps",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -35,7 +35,7 @@
   ],
   "scripts": {
     "build:css": "tailwindcss -i ./src/styles/polypuls3.css -o ./dist/polypuls3.css --minify",
-    "build": "npm run build:css && tsup",
+    "build": "tsup && npm run build:css",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
