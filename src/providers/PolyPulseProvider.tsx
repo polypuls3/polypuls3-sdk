@@ -132,7 +132,7 @@ export function PolyPulseProvider({
 
   return (
     <PolyPulseContext.Provider value={{ dataSourceConfig: config, themeConfig: theme }}>
-      <div className={`pp-theme-${theme.preset}`}>{children}</div>
+      <div className={`pp-theme-${theme.preset} pp-size-${theme.size || 'medium'}`}>{children}</div>
     </PolyPulseContext.Provider>
   )
 }

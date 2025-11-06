@@ -35,6 +35,7 @@ export {
   type ThemeEffects,
   type ThemeSpacing,
   type ThemeBorderRadius,
+  type WidgetSize,
 } from './config/theme'
 
 // Types

@@ -266,4 +266,119 @@
   .pp-animate-pulse {
     animation: polypuls3-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
+
+  /* ===========================
+     Widget Size Variants
+     =========================== */
+
+  /* Small widget size */
+  .pp-size-small .polypuls3-card {
+    @apply pp-p-4;
+  }
+
+  .pp-size-small .pp-widget-title {
+    @apply pp-text-lg pp-font-bold pp-mb-2;
+  }
+
+  .pp-size-small .pp-widget-heading {
+    @apply pp-text-base pp-font-semibold pp-mb-2;
+  }
+
+  .pp-size-small .pp-widget-body {
+    @apply pp-text-xs;
+  }
+
+  .pp-size-small .polypuls3-button {
+    @apply pp-px-3 pp-py-1 pp-text-xs;
+  }
+
+  .pp-size-small .pp-status-badge {
+    @apply pp-px-2 pp-py-0.5 pp-text-xs;
+  }
+
+  .pp-size-small .pp-vote-option {
+    @apply pp-p-3 pp-text-xs;
+  }
+
+  .pp-size-small .pp-vote-option-text {
+    @apply pp-text-xs;
+  }
+
+  .pp-size-small .pp-widget-spacing {
+    @apply pp-space-y-1.5;
+  }
+
+  /* Medium widget size (default) */
+  .pp-size-medium .polypuls3-card {
+    @apply pp-p-6;
+  }
+
+  .pp-size-medium .pp-widget-title {
+    @apply pp-text-2xl pp-font-bold pp-mb-3;
+  }
+
+  .pp-size-medium .pp-widget-heading {
+    @apply pp-text-lg pp-font-semibold pp-mb-3;
+  }
+
+  .pp-size-medium .pp-widget-body {
+    @apply pp-text-sm;
+  }
+
+  .pp-size-medium .polypuls3-button {
+    @apply pp-px-4 pp-py-2 pp-text-sm;
+  }
+
+  .pp-size-medium .pp-status-badge {
+    @apply pp-px-3 pp-py-1 pp-text-xs;
+  }
+
+  .pp-size-medium .pp-vote-option {
+    @apply pp-p-4 pp-text-sm;
+  }
+
+  .pp-size-medium .pp-vote-option-text {
+    @apply pp-text-sm;
+  }
+
+  .pp-size-medium .pp-widget-spacing {
+    @apply pp-space-y-2;
+  }
+
+  /* Large widget size */
+  .pp-size-large .polypuls3-card {
+    @apply pp-p-8;
+  }
+
+  .pp-size-large .pp-widget-title {
+    @apply pp-text-3xl pp-font-bold pp-mb-4;
+  }
+
+  .pp-size-large .pp-widget-heading {
+    @apply pp-text-xl pp-font-semibold pp-mb-4;
+  }
+
+  .pp-size-large .pp-widget-body {
+    @apply pp-text-base;
+  }
+
+  .pp-size-large .polypuls3-button {
+    @apply pp-px-5 pp-py-3 pp-text-base;
+  }
+
+  .pp-size-large .pp-status-badge {
+    @apply pp-px-4 pp-py-1.5 pp-text-sm;
+  }
+
+  .pp-size-large .pp-vote-option {
+    @apply pp-p-5 pp-text-base;
+  }
+
+  .pp-size-large .pp-vote-option-text {
+    @apply pp-text-base;
+  }
+
+  .pp-size-large .pp-widget-spacing {
+    @apply pp-space-y-3;
+  }
 }

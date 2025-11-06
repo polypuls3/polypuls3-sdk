@@ -14,6 +14,11 @@ export type ThemeSpacing = 'compact' | 'normal' | 'comfortable'
 export type ThemeBorderRadius = 'none' | 'small' | 'medium' | 'large'
 
 /**
+ * Widget size options
+ */
+export type WidgetSize = 'small' | 'medium' | 'large'
+
+/**
  * Color customization
  */
 export interface ThemeColors {
@@ -92,6 +97,12 @@ export interface ThemeConfig {
    * @default 'medium'
    */
   borderRadius?: ThemeBorderRadius
+
+  /**
+   * Widget size (affects spacing and typography)
+   * @default 'medium'
+   */
+  size?: WidgetSize
 }
 
 /**
@@ -101,6 +112,7 @@ export const DEFAULT_THEME_CONFIG: ThemeConfig = {
   preset: 'minimal',
   spacing: 'normal',
   borderRadius: 'medium',
+  size: 'medium',
 }
 
 /**

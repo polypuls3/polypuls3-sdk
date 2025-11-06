@@ -1,9 +1,11 @@
 import clsx from 'clsx'
 import { usePoll } from '../hooks/usePoll'
 import { useHasVoted } from '../hooks/useHasVoted'
+import { usePolyPulseConfig } from '../providers'
 import { PollResults } from './PollResults'
 import { VoteButton } from './VoteButton'
 import { getPollStatus, formatTimestamp, getTimeRemaining } from '../core/utils'
+import type { WidgetSize } from '../core/config/theme'
 
 export interface PollWidgetProps {
   pollId: bigint | string
@@ -12,6 +14,7 @@ export interface PollWidgetProps {
   onVoteSuccess?: () => void
   onVoteError?: (error: Error) => void
   showResults?: boolean // Force show results
+  size?: WidgetSize // Override global size
 }
 
 /**
@@ -33,9 +36,14 @@ export function PollWidget({
   onVoteSuccess,
   onVoteError,
   showResults = false,
+  size,
 }: PollWidgetProps) {
+  const { themeConfig } = usePolyPulseConfig()
   const { poll, isLoading, isError, error, refetch } = usePoll({ pollId, chainId })
   const { hasVoted, userVote } = useHasVoted({ pollId, chainId })
+
+  // Use provided size or fall back to global theme size
+  const effectiveSize = size ?? themeConfig.size ?? 'medium'
 
   // Auto-refetch on vote success
   const handleVoteSuccess = () => {
@@ -45,13 +53,15 @@ export function PollWidget({
 
   if (isLoading) {
     return (
-      <div className={clsx('polypuls3-card pp-animate-pulse', className)}>
-        <div className="pp-h-6 pp-bg-muted pp-rounded pp-mb-4"></div>
-        <div className="pp-h-4 pp-bg-muted pp-rounded pp-mb-2"></div>
-        <div className="pp-h-4 pp-bg-muted pp-rounded pp-w-2/3 pp-mb-6"></div>
-        <div className="pp-space-y-3">
-          <div className="pp-h-10 pp-bg-muted pp-rounded"></div>
-          <div className="pp-h-10 pp-bg-muted pp-rounded"></div>
+      <div className={`pp-size-${effectiveSize}`}>
+        <div className={clsx('polypuls3-card pp-animate-pulse', className)}>
+          <div className="pp-h-6 pp-bg-muted pp-rounded pp-mb-4"></div>
+          <div className="pp-h-4 pp-bg-muted pp-rounded pp-mb-2"></div>
+          <div className="pp-h-4 pp-bg-muted pp-rounded pp-w-2/3 pp-mb-6"></div>
+          <div className="pp-space-y-3">
+            <div className="pp-h-10 pp-bg-muted pp-rounded"></div>
+            <div className="pp-h-10 pp-bg-muted pp-rounded"></div>
+          </div>
         </div>
       </div>
     )
@@ -59,8 +69,10 @@ export function PollWidget({
 
   if (isError || !poll) {
     return (
-      <div className={clsx('polypuls3-card pp-text-error', className)}>
-        <p>Error loading poll: {error?.message || 'Poll not found'}</p>
+      <div className={`pp-size-${effectiveSize}`}>
+        <div className={clsx('polypuls3-card pp-text-error', className)}>
+          <p className="pp-widget-body">Error loading poll: {error?.message || 'Poll not found'}</p>
+        </div>
       </div>
     )
   }
@@ -70,30 +82,31 @@ export function PollWidget({
   const shouldShowResults = showResults || hasVoted || status === 'ended'
 
   return (
-    <div className={clsx('polypuls3-card', className)}>
-      {/* Header */}
-      <div className="pp-mb-4">
-        <div className="pp-flex pp-items-start pp-justify-between pp-mb-2">
-          <h2 className="pp-text-2xl pp-font-bold pp-text-foreground">{poll.question}</h2>
-          <span
-            className={clsx(
-              'pp-px-3 pp-py-1 pp-rounded-full pp-text-xs pp-font-medium',
-              status === 'active' && 'pp-bg-success/10 pp-text-success',
-              status === 'ended' && 'pp-bg-muted pp-text-muted-foreground',
-              status === 'not_started' && 'pp-bg-secondary/10 pp-text-secondary'
-            )}
-          >
-            {status === 'active' && 'Active'}
-            {status === 'ended' && 'Ended'}
-            {status === 'not_started' && 'Not Started'}
-          </span>
-        </div>
+    <div className={`pp-size-${effectiveSize}`}>
+      <div className={clsx('polypuls3-card', className)}>
+        {/* Header */}
+        <div className="pp-mb-4">
+          <div className="pp-flex pp-items-start pp-justify-between pp-mb-2">
+            <h2 className="pp-widget-title pp-text-foreground">{poll.question}</h2>
+            <span
+              className={clsx(
+                'pp-status-badge pp-rounded-full pp-font-medium',
+                status === 'active' && 'pp-bg-success/10 pp-text-success',
+                status === 'ended' && 'pp-bg-muted pp-text-muted-foreground',
+                status === 'not_started' && 'pp-bg-secondary/10 pp-text-secondary'
+              )}
+            >
+              {status === 'active' && 'Active'}
+              {status === 'ended' && 'Ended'}
+              {status === 'not_started' && 'Not Started'}
+            </span>
+          </div>
         {poll.category && (
-          <p className="pp-text-foreground pp-mb-3">Category: {poll.category}</p>
+          <p className="pp-widget-body pp-text-foreground pp-mb-3">Category: {poll.category}</p>
         )}
 
         {/* Time info */}
-        <div className="pp-text-sm pp-text-muted-foreground">
+        <div className="pp-widget-body pp-text-muted-foreground">
           {status === 'active' && !timeRemaining.isExpired && (
             <p>
               Ends in {timeRemaining.days > 0 && `${timeRemaining.days}d `}
@@ -107,10 +120,10 @@ export function PollWidget({
 
       {/* Results or Voting Interface */}
       {shouldShowResults ? (
-        <div>
-          <h3 className="pp-text-lg pp-font-semibold pp-mb-3">Results</h3>
+        <div className="pp-widget-spacing">
+          <h3 className="pp-widget-heading">Results</h3>
           {hasVoted && userVote !== undefined && (
-            <p className="pp-text-sm pp-text-success pp-mb-3">
+            <p className="pp-widget-body pp-text-success pp-mb-3">
               You voted for option {userVote.toString()}
             </p>
           )}
@@ -123,17 +136,17 @@ export function PollWidget({
           />
         </div>
       ) : (
-        <div>
-          <h3 className="pp-text-lg pp-font-semibold pp-mb-3">Cast your vote</h3>
-          <div className="pp-space-y-2">
+        <div className="pp-widget-spacing">
+          <h3 className="pp-widget-heading">Cast your vote</h3>
+          <div className="pp-widget-spacing">
             {poll.options?.map((option, index) => {
               const optionText = typeof option === 'string' ? option : option.text
               return (
                 <div
                   key={index}
-                  className="pp-flex pp-items-center pp-justify-between pp-p-4 pp-border pp-border-border pp-rounded-polypuls3 hover:pp-border-primary pp-transition-colors"
+                  className="pp-vote-option pp-flex pp-items-center pp-justify-between pp-border pp-border-border pp-rounded-polypuls3 hover:pp-border-primary pp-transition-colors"
                 >
-                  <span className="pp-text-foreground">{optionText}</span>
+                  <span className="pp-vote-option-text pp-text-foreground">{optionText}</span>
                   <VoteButton
                     pollId={pollId}
                     optionId={BigInt(index)}
@@ -147,6 +160,7 @@ export function PollWidget({
           </div>
         </div>
       )}
+      </div>
     </div>
   )
 }
