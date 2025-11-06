@@ -5,6 +5,67 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.3] - 2025-01-06
+
+### Fixed
+- Exported `PollResultsBar`, `PollResultsPie`, and `PollResultsInfographic` components from `@polypuls3/sdk/components` for direct import and usage
+- Fixed pie chart and infographic chart types not displaying correctly in demo Interactive Playground
+
+## [0.5.2] - 2025-01-06
+
+### Changed
+- Documentation updates and version bump for npm publishing
+
+## [0.5.1] - 2025-01-06
+
+### Fixed
+- Confetti celebration not working in demo/MockPollWidget components
+- celebrateVote function now properly imported and called
+
+### Added
+- Constrained confetti mode that limits confetti particles to widget boundaries
+- `constrained` option in ConfettiConfig to enable boundary-constrained confetti (default: false)
+- `origin` configuration option for customizing confetti spawn point with x and y coordinates (0-1 range)
+- `createConfettiInstance()` function for creating canvas-specific confetti instances
+- Canvas element overlay in PollWidget and MockPollWidget for constrained rendering
+- CSS classes `.pp-confetti-container` and `.pp-confetti-canvas` for proper positioning
+
+## [0.5.0] - 2025-01-06
+
+### Added
+- Multiple chart types for poll results: bar, pie, and infographic
+- `chartType` prop to control visualization style ('bar' | 'pie' | 'infographic')
+- `barOrientation` prop for horizontal or vertical bar charts
+- `infographicStyle` prop for different infographic layouts ('icons' | 'leaderboard' | 'cards')
+- `chartColors` prop for custom color palettes
+- PollResultsPie component with responsive pie chart using Recharts
+- PollResultsInfographic component with three style variants
+- PollResultsBar component extracted from PollResults for modularity
+
+### Changed
+- Refactored PollResults to route to appropriate chart component based on chartType
+
+## [0.4.9] - 2025-01-06
+
+### Added
+- MockPollWidget component for demo purposes without blockchain dependency
+- MockPollResults component matching SDK styling
+- Client-side poll simulation in demo app
+
+## [0.4.8] - 2025-01-06
+
+### Added
+- Display modes for PollWidget: 'vote', 'result', 'mixed'
+- `displayMode` prop to control interface behavior
+- `showResults` prop to toggle results data visibility
+- `resultsHiddenMessage` prop for custom message when results are hidden
+- Success banner with customizable message and duration
+- `showSuccessBanner`, `successMessage`, `successDuration` props
+- Confetti celebration effect on vote success
+- `enableConfetti` prop to toggle confetti animation
+- Size variants for widgets: 'small', 'medium', 'large'
+- Interactive playground demo page for testing all features
+
 ## [0.1.0] - 2024-XX-XX
 
 ### Added
